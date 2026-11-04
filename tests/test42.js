@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1500,height:700}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); state.settings.workYear='2026'; selKy='2026-10'; calcCache=null; view='d_purchases'; render(); }); await pg.waitForTimeout(300);
+ const n0=await pg.evaluate(()=>state.purchases.length);
+ await pg.click('#add'); await pg.waitForTimeout(200); await pg.click('button[data-save]'); await pg.waitForTimeout(200);
+ console.log('saved?', await pg.evaluate(n0=>state.purchases.length-n0, n0), 'still editing', await pg.evaluate(()=>!!editRow), 'toast', await pg.evaluate(()=>document.querySelector('.toast')?.textContent), 'miss cells', await pg.evaluate(()=>[...document.querySelectorAll('td.miss')].map(t=>t.dataset.k)));
+ await pg.screenshot({path:'/tmp/n_miss.png'});
+ await pg.evaluate(()=>{ view='lsxtt'; editRow=null; discardEdit(); render(); }); await pg.waitForTimeout(200);
+ await pg.click('#naRow'); await pg.click('button[data-save]'); await pg.waitForTimeout(200);
+ console.log('lsx miss', await pg.evaluate(()=>[...document.querySelectorAll('td.miss')].map(t=>t.dataset.k)), await pg.evaluate(()=>document.querySelector('.toast')?.textContent), errs);
+ await b.close(); })();

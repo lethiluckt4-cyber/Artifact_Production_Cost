@@ -1,0 +1,13 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1400,height:800}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); state.settings.workYear='2026'; selKy='2026-10'; view='giathanh'; calcCache=null; });
+ const base = await pg.evaluate(()=>{ calcCache=null; const p=P(); return [p.sum154, p.sum627, p.sum621, p.c627chung, p.c641]; });
+ await pg.evaluate(()=>{ state.issues.push({_id:'a', maPhieu:'XC1', ngay:'2026-10-05', maVT:'TRGA', sl:100, lyDo:'tn', loai:'Thử nghiệm (641)'}, {_id:'b', maPhieu:'XC2', ngay:'2026-10-06', maVT:'TRGA', sl:100, lyDo:'chung', loai:'Dùng chung SX (627)'}); calcCache=null; });
+ const aft = await pg.evaluate(()=>{ const p=P(); return [p.sum154, p.sum627, p.sum621, p.c627chung, p.c641, p.giaVon.TRGA]; });
+ console.log('base', base); console.log('after', aft, 'delta154', aft[0]-base[0], 'expected', 100*aft[5]);
+ console.log('year', await pg.evaluate(()=>{ selKy='2026'; calcCache=null; const p=P(); return [p.c627chung,p.c641]; }), 'range', await pg.evaluate(()=>{ selKy='R:2026-10-01:2026-10-05'; calcCache=null; const p=P(); return [p.c627chung,p.c641]; }));
+ await pg.evaluate(()=>{ selKy='2026-10'; view='d_issues'; render(); }); await pg.waitForTimeout(300); await pg.screenshot({path:'/tmp/n_issues2.png'});
+ await pg.evaluate(()=>{ view='d_costs'; render(); }); await pg.waitForTimeout(300);
+ console.log('imp', await pg.evaluate(()=>importAOA('issues',[['Số chứng từ','Ngày xuất','Loại','Mã VT','Số lượng','Lý do'],['','2026-10-07','627','TRGA',3,'x'],['','2026-10-07','thử nghiệm','TRGA',2,'y']],'add')), await pg.evaluate(()=>state.issues.slice(-2).map(r=>r.loai)), errs);
+ await b.close(); })();

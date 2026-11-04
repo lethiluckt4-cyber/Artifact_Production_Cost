@@ -1,0 +1,11 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; view='d_purchases'; render(); }); await pg.waitForTimeout(600);
+ await pg.click('#add'); await pg.waitForTimeout(150);
+ const n0 = await pg.evaluate(()=>app.state.purchases.length);
+ await pg.click('[data-v=d_items]'); await pg.waitForTimeout(200);
+ console.log('modal shown', await pg.evaluate(()=>!!document.querySelector('.modal')), 'still view', await pg.evaluate(()=>view));
+ await pg.click('#gStay'); await pg.waitForTimeout(150); console.log('stayed', await pg.evaluate(()=>[view, !!editRow, app.state.purchases.length]));
+ await pg.click('[data-v=d_items]'); await pg.waitForTimeout(150); await pg.click('#gDrop'); await pg.waitForTimeout(300);
+ console.log('after discard', await pg.evaluate(()=>[view, editRow, app.state.purchases.length]), errs); await b.close(); })();

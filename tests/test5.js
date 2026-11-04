@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(1000);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; render(); }); await pg.waitForTimeout(500);
+ await pg.evaluate(()=>document.querySelector('[data-v=kehoach]').click()); await pg.waitForTimeout(500); await pg.screenshot({path:'/tmp/man-hinh-10-ke-hoach-sx.png'});
+ console.log(await pg.evaluate(()=>app.state.plan.length));
+ await pg.click('.tabs button[data-t=dx]'); await pg.waitForTimeout(600); await pg.screenshot({path:'/tmp/man-hinh-11-de-xuat-sx.png', fullPage:true});
+ console.log(await pg.evaluate(()=>{ const d=buildProposal(P()); return {rows:d.rows.map(r=>[r.ma,r.tp,r.me,r.st,r.note]), chot:d.chotRows.map(c=>[c.tp,c.dc,Math.round(c.giaTri)]), need:d.need.length}; }));
+ await pg.click('.tabs button[data-t=cn]'); await pg.waitForTimeout(500); await pg.screenshot({path:'/tmp/man-hinh-12-cap-nhat-lsx.png'});
+ await pg.evaluate(()=>document.querySelector('[data-v=d_items]').click()); await pg.waitForTimeout(300);
+ console.log('errors', errs);
+ await b.close(); })();

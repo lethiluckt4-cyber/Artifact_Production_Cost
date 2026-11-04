@@ -1,0 +1,15 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; view='d_bom'; render(); }); await pg.waitForTimeout(300);
+ await pg.click('#add'); await pg.waitForTimeout(150);
+ await pg.evaluate(()=>{ const id=editRow; const tp=document.querySelector(`select.ci[data-id="${id}"][data-k="maTP"]`); tp.value='BO'; tp.onchange(); const nv=document.querySelector(`select.ci[data-id="${id}"][data-k="maNVL"]`); nv.value='TOI'; nv.onchange(); document.querySelector(`td.ed[data-id="${id}"][data-k="slTP"]`).textContent='23'; document.querySelector(`td.ed[data-id="${id}"][data-k="slNVL"]`).textContent='0.5'; });
+ await pg.screenshot({path:'/tmp/man-hinh-39-dinh-muc-them.png'});
+ console.log('live name', await pg.evaluate(()=>[...document.querySelectorAll('tr td.xtra')].slice(0,3).map(td=>td.textContent)));
+ await pg.click('[data-save]'); await pg.waitForTimeout(200);
+ console.log('bom saved', await pg.evaluate(()=>app.state.bom.filter(b=>b.maTP==='BO' && b.maNVL==='TOI').map(b=>[b.loai,b.slTP,b.slNVL])));
+ await pg.evaluate(()=>{ view='d_items'; render(); }); await pg.waitForTimeout(200); await pg.click('#add'); await pg.waitForTimeout(100);
+ console.log('items nhom select', await pg.evaluate(()=>!!document.querySelector('select.ci[data-k="nhom"]')));
+ await pg.evaluate(()=>{ view='d_adjustments'; render(); }); await pg.waitForTimeout(200); await pg.click('#add'); await pg.waitForTimeout(100);
+ console.log('adj lenh input', await pg.evaluate(()=>!!document.querySelector('select.ci[data-k="maLenh"]')), errs);
+ await b.close(); })();

@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; search='PATE2'; view='d_bom'; render(); }); await pg.waitForTimeout(300);
+ await pg.click('[data-ins]'); await pg.waitForTimeout(200);
+ console.log('new row tp', await pg.evaluate(()=>{ const r=app.state.bom.find(x=>x._new); return [r.maTP, r.slTP, r.lanNgay, !!document.querySelector(`select.ci[data-id="${r._id}"][data-k="maNVL"]`)]; }));
+ await pg.evaluate(()=>{ const r=app.state.bom.find(x=>x._new); const s=document.querySelector(`select.ci[data-id="${r._id}"][data-k="maNVL"]`); s.value='TIEU'; s.onchange(); document.querySelector(`td.ed[data-id="${r._id}"][data-k="slNVL"]`).textContent='0.3'; });
+ await pg.screenshot({path:'/tmp/man-hinh-41-chen-nvl.png'});
+ await pg.click('[data-save]'); await pg.waitForTimeout(200);
+ console.log('saved', await pg.evaluate(()=>app.state.bom.filter(b=>b.maTP==='PATE2'&&b.maNVL==='TIEU').length), errs); await b.close(); })();

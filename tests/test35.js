@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); calcCache=null; calcDirty=true; state.settings.workYear='2026'; selKy='2026-10'; view='giathanh'; render(); }); await pg.waitForTimeout(300);
+ await pg.click('#recalc'); await pg.waitForTimeout(200); await pg.click('#rcGo'); await pg.waitForTimeout(1500); await pg.click('#rsAdj'); await pg.waitForTimeout(1500); await pg.evaluate(()=>closeModal());
+ console.log('after run', await pg.evaluate(()=>[proposalDirty(), state.orders.filter(o=>num(o.dieuChinhMe)).length, state.adjustments.length]));
+ await pg.click('#recalc'); await pg.waitForTimeout(200); console.log('reset visible', await pg.evaluate(()=>$('#rcResetWrap').style.display!=='none')); await pg.check('#rcReset'); await pg.click('#rcGo'); await pg.waitForTimeout(1500);
+ console.log(await pg.evaluate(()=>[...document.querySelectorAll('.modal ol li')].slice(0,3).map(l=>l.textContent.slice(0,90))));
+ console.log('after reset run', await pg.evaluate(()=>[proposalDirty(), state.orders.filter(o=>num(o.dieuChinhMe)).length, state.adjustments.length]), errs);
+ await b.close(); })();

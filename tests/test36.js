@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); calcCache=null; calcDirty=true; state.settings.workYear='2026'; selKy='2026-10'; view='giathanh'; render(); }); await pg.waitForTimeout(300);
+ await pg.click('#recalc'); await pg.waitForTimeout(200); await pg.click('#rcGo'); await pg.waitForTimeout(1500); await pg.evaluate(()=>closeModal());
+ await pg.evaluate(()=>{ view='kehoach'; $('#main').dataset.ktab='dc'; render(); }); await pg.waitForTimeout(400);
+ const n = await pg.evaluate(()=>document.querySelectorAll('input[data-adj]').length); console.log('inputs', n);
+ await pg.screenshot({path:'/tmp/n_adj_tab.png'});
+ const a0 = await pg.evaluate(()=>state.adjustments.length);
+ await pg.fill('input[data-adj="0"]','0'); await pg.fill('input[data-adj="1"]','-2'); await pg.click('#adjApply'); await pg.waitForTimeout(200); await pg.click('#mo'); await pg.waitForTimeout(400);
+ console.log('added', await pg.evaluate(a0=>[state.adjustments.length-a0, view, state.adjustments.slice(a0).map(a=>a.dieuChinh).slice(0,3)], a0), errs);
+ await b.close(); })();

@@ -1,0 +1,15 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; view='d_purchases'; render(); }); await pg.waitForTimeout(400);
+ const id = await pg.evaluate(()=>document.querySelector('[data-edit]').dataset.edit);
+ await pg.click('[data-edit]'); await pg.waitForTimeout(200); await pg.screenshot({path:'/tmp/man-hinh-36-sua-dong.png'});
+ await pg.evaluate(id=>{ const td=document.querySelector(`td.ed[data-id="${id}"][data-k="sl"]`); td.textContent='999'; }, id);
+ await pg.click('[data-save]'); await pg.waitForTimeout(300);
+ console.log('saved', await pg.evaluate(id=>{ const r=app.state.purchases.find(x=>x._id===id); return [r.sl, r.tt]; }, id));
+ await pg.click('#add'); await pg.waitForTimeout(200); console.log('new editing', await pg.evaluate(()=>!!document.querySelector('[data-save]')));
+ await pg.click('[data-cancel]'); await pg.waitForTimeout(200); console.log('after cancel count', await pg.evaluate(()=>app.state.purchases.length));
+ await pg.evaluate(()=>{ view='d_opening'; render(); }); await pg.waitForTimeout(200); await pg.click('[data-edit]'); await pg.waitForTimeout(100); await pg.evaluate(()=>{ document.querySelector('td.ed[data-k="sl"]').textContent='8600'; }); await pg.click('[data-save]'); await pg.waitForTimeout(200); console.log('opening', await pg.evaluate(()=>app.state.opening.rows['BO']));
+ await pg.evaluate(()=>{ view='d_costs'; render(); }); await pg.waitForTimeout(200); await pg.click('[data-edit="2026-10"]'); await pg.waitForTimeout(100); await pg.evaluate(()=>{ document.querySelector('td.ed[data-k="c622"]').textContent='120000000'; }); await pg.click('[data-save]'); await pg.waitForTimeout(200); console.log('cost', await pg.evaluate(()=>app.state.costs['2026-10']));
+ await pg.evaluate(()=>{ view='lsxtt'; render(); }); await pg.waitForTimeout(200); await pg.click('[data-edit]'); await pg.waitForTimeout(100); await pg.evaluate(()=>{ document.querySelector('td.ed').textContent='2'; }); await pg.click('[data-save]'); await pg.waitForTimeout(200); console.log('order', await pg.evaluate(()=>app.state.orders[0].dieuChinhMe));
+ console.log(errs); await b.close(); })();

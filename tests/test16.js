@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; view='d_purchases'; render(); }); await pg.waitForTimeout(400);
+ const h = (await pg.$$('thead th .xrs'))[3]; const box = await h.boundingBox();
+ await pg.mouse.move(box.x+3, box.y+10); await pg.mouse.down(); await pg.mouse.move(box.x-150, box.y+10, {steps:5}); await pg.mouse.up(); await pg.waitForTimeout(200);
+ console.log('width', await pg.evaluate(()=>document.querySelectorAll('thead th')[3].style.width));
+ await pg.evaluate(()=>render()); await pg.waitForTimeout(300);
+ console.log('persist', await pg.evaluate(()=>document.querySelectorAll('thead th')[3].style.width));
+ await pg.screenshot({path:'/tmp/man-hinh-35-resize.png'}); console.log(errs); await b.close(); })();

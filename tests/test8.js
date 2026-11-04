@@ -1,0 +1,11 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:860}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; view='d_sales'; render(); }); await pg.waitForTimeout(300);
+ await pg.click('#paste'); await pg.waitForTimeout(200);
+ await pg.evaluate(()=>{ document.querySelector('details').open=true; document.querySelector('#pt').value='05/11/2026\tBO\t100\t5500000\n05/11/2026\tXYZ\t5\t100000\n05/11/2026\tABC\t5\t100000'; document.querySelector('[name=pm][value=add]').checked=true; document.querySelector('#ptok').click(); });
+ await pg.waitForTimeout(300); await pg.screenshot({path:'/tmp/man-hinh-20-ma-thieu.png'});
+ console.log('sales nov', await pg.evaluate(()=>app.state.sales.filter(s=>s.ngay==='2026-11-05').length), 'modal open', await pg.evaluate(()=>!!document.querySelector('.modal')));
+ await pg.click('[data-mkitems]'); await pg.waitForTimeout(300);
+ console.log('after create', await pg.evaluate(()=>[app.state.sales.filter(s=>s.ngay==='2026-11-05').length, app.state.items.filter(i=>['XYZ','ABC'].includes(i.ma)).length]), errs);
+ await b.close(); })();

@@ -1,0 +1,11 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; view='d_purchases'; render(); });
+ await pg.click('#lockbtn'); await pg.waitForTimeout(200); await pg.click('[data-tg="2026-10"]'); await pg.waitForTimeout(150); await pg.click('#mo'); await pg.waitForTimeout(300); await pg.evaluate(()=>{ closeModal(); render(); }); await pg.waitForTimeout(200);
+ await pg.screenshot({path:'/tmp/man-hinh-28-khoa-ky.png'});
+ const r = await pg.evaluate(()=>{ const n=importAOA('sales', [['05/10/2026','BO','10','550000'],['05/11/2026','BO','10','550000']], 'add'); return [app.state.settings.locked, n, importAOA.skipped, document.querySelectorAll('td.ed').length, !!document.querySelector('#add').disabled]; });
+ console.log(r);
+ await pg.evaluate(()=>{ view='kehoach'; render(); }); await pg.waitForTimeout(300); console.log('pUndo disabled', await pg.evaluate(()=>document.querySelector('#pUndo').disabled));
+ await pg.evaluate(()=>{ view='thietlap'; render(); }); await pg.waitForTimeout(300); await pg.click('[data-lk="2026-10"]'); await pg.waitForTimeout(150); await pg.click('#mo'); await pg.waitForTimeout(300);
+ console.log('after unlock', await pg.evaluate(()=>app.state.settings.locked), errs); await b.close(); })();

@@ -1,0 +1,14 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); changed(); state.settings.workYear='2026'; selKy='2026-10'; view='d_items'; render(); }); await pg.waitForTimeout(300);
+ await pg.click('#add'); await pg.waitForTimeout(150);
+ await pg.evaluate(()=>{ const id=editRow; document.querySelector(`td.ed[data-id="${id}"][data-k="ma"]`).textContent='TEST1'; });
+ const toasts=[]; pg.on('console',()=>{});
+ await pg.click('[data-save]'); await pg.waitForTimeout(200); console.log('items saved?', await pg.evaluate(()=>app.state.items.some(i=>i.ma==='TEST1')), await pg.evaluate(()=>document.querySelector('.toast')?.textContent));
+ await pg.evaluate(()=>{ const id=editRow; document.querySelector(`td.ed[data-id="${id}"][data-k="ten"]`).textContent='Hàng thử'; document.querySelector(`td.ed[data-id="${id}"][data-k="nhom"]`).textContent='PG'; document.querySelector(`td.ed[data-id="${id}"][data-k="dvt"]`).textContent='kg'; });
+ await pg.click('[data-save]'); await pg.waitForTimeout(200); console.log('items saved now?', await pg.evaluate(()=>app.state.items.some(i=>i.ma==='TEST1')));
+ await pg.evaluate(()=>{ view='d_opening'; render(); }); await pg.waitForTimeout(300); await pg.screenshot({path:'/tmp/man-hinh-37-so-du.png'});
+ await pg.click('#opAdd'); await pg.waitForTimeout(150); await pg.selectOption('#opMa','TEST1'); await pg.evaluate(()=>{ $('#opSl').textContent='12'; $('#opTt').textContent='240000'; });
+ await pg.screenshot({path:'/tmp/man-hinh-38-so-du-them.png'}); await pg.click('#opSave'); await pg.waitForTimeout(200);
+ console.log('opening', await pg.evaluate(()=>app.state.opening.rows['TEST1']), errs); await b.close(); })();

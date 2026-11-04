@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1400,height:700}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file://'+require('path').resolve(__dirname,'../artifact/index.html')); await pg.waitForTimeout(800);
+ await pg.evaluate(()=>{ fromDocs(JSON.parse(document.querySelector('#seed').textContent)); state.settings.workYear='2026'; selKy='2026-10'; view='d_issues'; render(); }); await pg.waitForTimeout(300);
+ await pg.click('#add'); await pg.waitForTimeout(200);
+ await pg.evaluate(()=>{ const id=editRow; const sel=document.querySelector(`select.ci[data-id="${id}"][data-k="maVT"]`); sel.value='TRGA'; const td=document.querySelector(`td.ed[data-id="${id}"][data-k="sl"]`); td.textContent='5'; });
+ await pg.click('button[data-save]'); await pg.waitForTimeout(300);
+ console.log(await pg.evaluate(()=>state.issues.map(r=>[r.maPhieu,r.ngay,r.maVT,r.sl])));
+ console.log(await pg.evaluate(()=>importAOA('issues',[['Số chứng từ','Ngày xuất','Mã VT','Số lượng','Lý do'],['','2026-10-01','TRGA',3,'x'],['','2026-10-05','DAHE',2,'y']],'add')));
+ console.log(await pg.evaluate(()=>state.issues.map(r=>r.maPhieu)), errs);
+ await pg.evaluate(()=>render()); await pg.screenshot({path:'/tmp/n_issues.png'});
+ await b.close(); })();
