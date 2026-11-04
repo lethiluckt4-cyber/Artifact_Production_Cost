@@ -1,0 +1,16 @@
+const { chromium } = require('playwright'); const path=require('path'); const APP='file://'+path.resolve(__dirname,'../artifact/index.html'); const DATA=p=>path.resolve(__dirname,'../data',p); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto(APP); await pg.waitForTimeout(800);
+ const seed=JSON.parse(fs.readFileSync(DATA('demo_2026_seed.json'),'utf8')); await pg.evaluate(([s])=>{ app.importDocs(s); selKy='2026-10'; view='d_orders'; render(); },[seed]); await pg.waitForTimeout(300);
+ await pg.click('#add'); await pg.waitForTimeout(200);
+ await pg.evaluate(()=>{ const id=editRow; const set=(k,v)=>{ const td=document.querySelector(`td.ed[data-id="${id}"][data-k="${k}"]`); const ci=td.querySelector('.ci'); if(ci){ ci.value=v; } else td.textContent=v; }; set('ngaySX','28/10/2026'); set('maTP','TP_BKG'); set('slKH','20'); });
+ await pg.click(`[data-save]`); await pg.waitForTimeout(300);
+ const o = await pg.evaluate(()=>{ const o=state.orders.find(o=>o.ngaySX==='2026-10-28'); calcCache=null; const t=calc().TH[o._id]; return [o.maLenh,o.ngayXuatNVL,o.maTP,o.slKH,o.dieuChinhTP,t.slTH]; }); console.log('new order', o);
+ await pg.evaluate(()=>{ editRow=null; view='d_cal'; render(); }); await pg.click('#add'); await pg.waitForTimeout(100);
+ await pg.evaluate(()=>{ const id=editRow; document.querySelector(`td.ed[data-id="${id}"][data-k="ngay"]`).textContent='2026-11-02'; document.querySelector(`td.ed[data-id="${id}"] .ci[data-k="loai"]`).value='Nghỉ chờ việc'; }); await pg.click('[data-save]'); await pg.waitForTimeout(200);
+ console.log('cal', await pg.evaluate(()=>state.cal.filter(c=>c.ngay==='2026-11-02').map(c=>c.loai)));
+ await pg.evaluate(()=>{ view='d_adjustments'; render(); }); await pg.click('#add'); await pg.waitForTimeout(100);
+ await pg.evaluate(()=>{ const id=editRow; document.querySelector(`td.ed[data-id="${id}"][data-k="ngaySX"]`).textContent='01/10/2026'; document.querySelector(`td.ed[data-id="${id}"] .ci[data-k="maTP"]`).value='BTP_BGK'; document.querySelector(`td.ed[data-id="${id}"] .ci[data-k="maVT"]`).value='BM_TH'; document.querySelector(`td.ed[data-id="${id}"][data-k="dieuChinh"]`).textContent='-5'; }); await pg.click('[data-save]'); await pg.waitForTimeout(200);
+ console.log('adj', await pg.evaluate(()=>{ calcCache=null; const l=P().lines.find(l=>l.ngaySX==='2026-10-01'&&l.maTP==='BTP_BGK'&&l.maVT==='BM_TH'); return [l.slDM,l.dc,l.tong]; }));
+ await pg.screenshot({path:path.resolve(__dirname,'out','adj_grid.png')});
+ console.log('errs', errs); await b.close(); })();

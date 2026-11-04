@@ -1,0 +1,11 @@
+{
+  "name": "giathanh-tests",
+  "private": true,
+  "description": "Kiểm thử tự động Phần mềm Giá thành (Playwright)",
+  "scripts": {
+    "verify": "node t_verify_noloi.js",
+    "views": "node t_views.js",
+    "loi": "node t_loi.js && node t_loi_ui.js && node t_comp.js"
+  },
+  "devDependencies": { "playwright": "^1.47.0" }
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Phần mềm Giá thành – Công ty Thiên Hồng",
+  "entry": "index.html",
+  "icon": "Grid",
+  "runtime_contract": "0.2.96",
+  "capabilities": {
+    "db": { "rules": [ { "path": "", "read": "view", "write": "interact" } ] },
+    "downloads": {}
+  },
+  "database": {
+    "collection": "gt",
+    "documents": 52,
+    "seed_files": "../data/db_gt/*.json (mỗi tệp = 1 tài liệu, tên tệp = id tài liệu)",
+    "backup_file": "../data/SaoLuu_GiaThanh_2026-11-04.json (dùng nút ⬆ Phục hồi từ file .json)"
+  },
+  "source_artifact": "https://claude.ai/artifact/T1ZziEzUpnZaSJNkGfcRcF",
+  "snapshot_date": "2026-11-04"
+}

@@ -1,0 +1,13 @@
+const { chromium } = require('playwright'); const path=require('path'); const APP='file://'+path.resolve(__dirname,'../artifact/index.html'); const DATA=p=>path.resolve(__dirname,'../data',p); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1400,height:1500}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto(APP); await pg.waitForTimeout(600);
+ const seed=JSON.parse(fs.readFileSync(DATA('demo_2026_seed.json'),'utf8'));
+ await pg.evaluate(([s])=>{ app.importDocs(s); calcCache=null; calcDirty=false; selKy='2026-07'; view='thietlap'; document.querySelector('#main').dataset.tlt='pb'; render(); },[seed]); await pg.waitForTimeout(400);
+ console.log('tabs:', await pg.evaluate(()=>[...document.querySelectorAll('#main .tabs button')].map(b=>b.textContent+(b.classList.contains('act')?'*':'')).join(' | ')));
+ await pg.fill('#al627','0.9'); await pg.dispatchEvent('#al627','input'); console.log('CĐ2 627 live:', await pg.textContent('#cd2_627'));
+ await pg.fill('#al627','1'); await pg.dispatchEvent('#al627','input');
+ await pg.screenshot({path:path.resolve(__dirname,'out','pb.png'), fullPage:true});
+ await pg.click('#alSave'); await pg.waitForTimeout(200); console.log('lưu:', await pg.evaluate(()=>[...document.querySelectorAll('.toast')].map(t=>t.textContent).pop()));
+ await pg.evaluate(()=>{ view='d_costs'; render(); }); await pg.waitForTimeout(300); console.log('costs has box:', await pg.evaluate(()=>!!document.querySelector('#al622')), await pg.evaluate(()=>!!document.querySelector('#goPB')));
+ await pg.click('#goPB'); await pg.waitForTimeout(300); console.log('link ->', await pg.evaluate(()=>[view, document.querySelector('#main .tabs button.act')?.textContent]));
+ console.log('errs',errs); await b.close(); })();

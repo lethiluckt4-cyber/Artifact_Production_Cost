@@ -1,0 +1,11 @@
+const { chromium } = require('playwright'); const path=require('path'); const APP='file://'+path.resolve(__dirname,'../artifact/index.html'); const DATA=p=>path.resolve(__dirname,'../data',p); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto(APP); await pg.waitForTimeout(800);
+ const seed=JSON.parse(fs.readFileSync(DATA('demo_2026_seed.json'),'utf8'));
+ const out = await pg.evaluate(([s])=>{ app.importDocs(s); calcCache=null; const sg=suggestRate('2026-10'); const pp=planPrm(); pp.nlUoc={'2026-10':110000000}; state.settings.planPrm=pp; calcCache=null;
+   const pl=buildPlan('2026'); const M=pl.months['2026-10'];
+   const oct=pl.rows.filter(r=>r.d>='2026-10-01'&&r.d<='2026-10-31').map(r=>[r.d.slice(8), Math.round(r.cap), Math.round(r.sx.BTP_BGKT), r.sx.TP_BKG, r.sx.TP_BKG_150G, r.sx.TP_BKG_400G, r.sx.BTP_BGK, r.sx.BTP_KT, ['TP_BKG','TP_BKG_150G','TP_BKG_400G'].map(f=>r.cover[f]==null?'-':r.cover[f].toFixed(1)).join('/'), r.warn.join('|')].join(' '));
+   return {sg, M:{E:M.E, src:M.src, rate:M.rate, wd:M.wd, cap:Math.round(M.capKg), day:Math.round(M.kgDay), kg:Math.round(M.kg)}, sep:(({E,src,rate,wd,capKg,kg,noGas})=>({E,src,rate,wd,capKg:Math.round(capKg),kg:Math.round(kg),noGas}))(pl.months['2026-09']), oct, pend: pl.list.filter(x=>x.d.startsWith('2026-10')&&x.st==='CHƯA CÓ LỆNH').length}; },[seed]);
+ console.log(JSON.stringify(out.sg), JSON.stringify(out.M), JSON.stringify(out.sep), out.pend); out.oct.forEach(x=>console.log(x));
+ await pg.evaluate(()=>{ selKy='2026-10'; view='kehoach'; render(); }); await pg.waitForTimeout(300); await pg.screenshot({path:path.resolve(__dirname,'out','plan3.png')});
+ console.log('errs', errs); await b.close(); })();

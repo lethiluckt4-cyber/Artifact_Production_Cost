@@ -1,0 +1,12 @@
+const { chromium } = require('playwright'); const path=require('path'); const APP='file://'+path.resolve(__dirname,'../artifact/index.html'); const DATA=p=>path.resolve(__dirname,'../data',p); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:700}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto(APP); await pg.waitForTimeout(800);
+ const seed=JSON.parse(fs.readFileSync(DATA('demo_2026_seed.json'),'utf8'));
+ await pg.evaluate(([s])=>{ app.importDocs(s); calcCache=null; selKy='2026-10'; view='d_orders'; render(); },[seed]); await pg.waitForTimeout(300);
+ const sl = d => pg.evaluate(d=>{ calcCache=null; const c=calc(); const g=ma=>state.orders.filter(o=>o.ngaySX===d&&o.maTP===ma).reduce((s,o)=>s+c.TH[o._id].slTH,0); return {BGK:g('BTP_BGK'),KT:g('BTP_KT'),BGKT:g('BTP_BGKT'),TP:g('TP_BKG')}; }, d);
+ console.log('headers:', await pg.evaluate(()=>[...document.querySelectorAll('#main thead th')].map(t=>t.innerText.replace(/\s+/g,' ').replace('▼','').trim()).join(' | ')));
+ console.log('02/10 gốc', await sl('2026-10-02'));
+ await pg.evaluate(()=>{ const r=state.orders.find(o=>o.ngaySX==='2026-10-02'&&o.maTP==='TP_BKG'); editRow=r._id; render(); document.querySelector(`td.ed[data-id="${r._id}"][data-k="slKH"]`).textContent='12'; }); await pg.click('[data-save]'); await pg.waitForTimeout(200);
+ console.log('02/10 sửa 112→12 (Excel)', await sl('2026-10-02'), await pg.evaluate(()=>{ const r=state.orders.find(o=>o.ngaySX==='2026-10-02'&&o.maTP==='TP_BKG'); return [r.nguon, r.slDX]; }));
+ console.log('03/10 không đổi?', await sl('2026-10-03'));
+ console.log('errs', errs); await b.close(); })();

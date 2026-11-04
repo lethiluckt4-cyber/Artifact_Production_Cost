@@ -1,0 +1,11 @@
+const { chromium } = require('playwright'); const path=require('path'); const APP='file://'+path.resolve(__dirname,'../artifact/index.html'); const DATA=p=>path.resolve(__dirname,'../data',p); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:1000}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto(APP); await pg.waitForTimeout(800);
+ const seed=JSON.parse(fs.readFileSync(DATA('demo_2026_seed.json'),'utf8'));
+ await pg.evaluate(([s])=>{ app.importDocs(s); selKy='2026-10'; view='kehoach'; render(); },[seed]); await pg.waitForTimeout(300);
+ await pg.evaluate(()=>window.scrollTo(0,520)); await pg.screenshot({path:path.resolve(__dirname,'out','attn_noen.png')});
+ await pg.evaluate(()=>{ const pp=planPrm(); pp.nlUoc={'2026-10':110000000}; state.settings.planPrm=pp; calcCache=null; render(); }); await pg.waitForTimeout(300);
+ await pg.evaluate(()=>window.scrollTo(0,520)); await pg.screenshot({path:path.resolve(__dirname,'out','attn_en.png')});
+ await pg.click('#khDetail'); await pg.waitForTimeout(300); console.log('tables', await pg.evaluate(()=>document.querySelectorAll('#main table').length));
+ await pg.click('#khDetail'); await pg.waitForTimeout(200); console.log('tables after hide', await pg.evaluate(()=>document.querySelectorAll('#main table').length));
+ console.log('errs', errs); await b.close(); })();
