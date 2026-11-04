@@ -25,6 +25,7 @@ docs/
   03_TINH_NANG_VA_QUY_DINH_DA_CHOT.md     Menu, quy trình, công thức, đề xuất, cảnh báo, giao diện, nhập / xuất
   04_HUONG_DAN_LAM_CHO_CONG_TY_MOI.md     Các bước dựng cho công ty khác, danh sách kiểm tra bàn giao
   hinh_anh/                               20 ảnh chụp các màn hình chính
+database/                                 Thiết kế database PostgreSQL: schema, dữ liệu demo, sao lưu, ERD, từ điển dữ liệu (xem database/README.md)
 tests/                                    Kiểm thử Playwright (test*.js)
 tools/                                    extract.py, make_docs.py, make_template.py, export_phieu.js, shots_repo.js, mk_backup.js
 ```
