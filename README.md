@@ -29,6 +29,11 @@ docs/
   04_HUONG_DAN_XAY_DUNG_CHO_CONG_TY_MOI.md  Bảng câu hỏi, 7 bước dựng lại, chỗ đang ghi cứng, nghiệm thu
   05_NHAT_KY_YEU_CAU_DA_CHOT.md      Các quyết định người dùng đã chốt
   hinh_anh/                          33 ảnh chụp mọi màn hình, tab, hộp thoại
+database/                            Database schema PostgreSQL cho hệ thống thật (xem database/README.md)
+  01_schema.sql, 02_views.sql        30 bảng + 7 view, đa công ty, trigger khóa kỳ
+  03_…, 04_…, 05_….sql               Dữ liệu Thiên Hồng 2026, kết quả tính, công ty DEMO
+  nap_database.sh, kiem_tra.sql      Nạp toàn bộ + kiểm tra
+  cong_cu/                           Đổi tệp sao lưu .json → SQL; xuất kết quả tính từ mockup
 tests/                               Kiểm thử tự động Playwright + extract_th.py (đọc Excel gốc → seed/expected)
 ```
 
