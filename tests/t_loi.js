@@ -1,0 +1,5 @@
+const { chromium } = require('playwright'); const path=require('path'); const APP='file://'+path.resolve(__dirname,'../artifact/index.html'); const DATA=p=>path.resolve(__dirname,'../data',p); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto(APP); await pg.waitForTimeout(1200);
+ const r=await pg.evaluate(s=>{ app.importDocs(s); calcCache=null; const c=calc(); const out=[]; for (const k of c.list){ const P=c.periods[k]; const g=x=>P.nxt.find(n=>n.ma===x)||{}; out.push([k, Math.round(P.slLoi), Math.round(P.thuHoi), Math.round(g('BTP_BGK').closeSL), Math.round(P.unitCost['BTP_BGK']||0), Math.round(g('BTP_BGK_LOI').closeSL), g('BTP_BGK').status, Math.round(P.sum154)]); } return {items:state.items.filter(i=>i.nhom==='Sản phẩm lỗi').map(i=>i.ma+' '+i.ten), out, sp:state.settings.spLoi}; }, JSON.parse(fs.readFileSync(DATA('demo_2026_seed.json'),'utf8')));
+ console.log(JSON.stringify(r.items), JSON.stringify(r.sp)); r.out.forEach(x=>console.log(x.join(' | '))); console.log(errs); await b.close(); })();
