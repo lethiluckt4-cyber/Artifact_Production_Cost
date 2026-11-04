@@ -5,7 +5,7 @@ Thiết kế cơ sở dữ liệu quan hệ **PostgreSQL 14+** cho hệ thống 
 ## Cấu trúc thư mục
 ```
 database/
-  migrations/0001_init.sql          Schema đầy đủ: 22 bảng + 3 view + trigger (schema `giathanh`)
+  migrations/0001_init.sql          Schema đầy đủ: 23 bảng + 3 view + trigger (schema `giathanh`)
   seed/demo_thao_vy.sql             Dữ liệu demo KH Thảo Vy tháng 10/2026 (sinh tự động, nạp được ngay)
   backups/                          Nơi lưu bản sao lưu database
     giathanh_demo_thao_vy_2026-11-04.sql   Bản pg_dump (schema + dữ liệu demo), phục hồi bằng 1 lệnh
