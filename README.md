@@ -13,8 +13,9 @@ artifact/
   index_mau_trong.html        Bản mẫu trống cho công ty khác: không dữ liệu, tên [TÊN CÔNG TY], chưa khai sản phẩm lỗi
   artifact_manifest.json      Khai báo artifact: capabilities db + downloads, bộ sưu tập dữ liệu "gt"
 data/
-  SaoLuu_GiaThanh_2026-11-04.json   Toàn bộ dữ liệu hiện tại (52 tài liệu), đúng định dạng file sao lưu của phần mềm
-  db_gt/*.json                       Cùng dữ liệu đó, tách theo từng tài liệu của kho "gt" (tên tệp = id tài liệu)
+  SaoLuu_GiaThanh_2026-11-12.json   MỚI NHẤT – trạng thái đang lưu trên tài khoản ngày 12/11/2026 (52 tài liệu), đúng định dạng file sao lưu
+  SaoLuu_GiaThanh_2026-11-04.json   Bản sao lưu cũ ngày 04/11/2026 (giữ để đối chiếu)
+  db_gt/*.json                       Cùng dữ liệu bản 12/11/2026, tách theo từng tài liệu của kho "gt" (tên tệp = id tài liệu)
   demo_2026_seed.json                Dữ liệu demo nhúng sẵn trong index.html (chuyển từ Excel gốc)
   DuLieu_GiaThanh_2026-11-04.xlsx    Toàn bộ dữ liệu hiện tại dạng Excel, đúng mẫu nhập (nhập lại được)
   Mau_Tai_Du_Lieu_GiaThanh.xlsx      Mẫu nhập dữ liệu trống (11 sheet)
@@ -53,7 +54,7 @@ tests/                               Kiểm thử tự động Playwright + extr
 
 ## Cách chạy
 1. **Xem ngay trên máy:** mở `artifact/index.html` bằng Chrome / Edge. Vào **Tổng quan**, bấm **Nạp dữ liệu năm 2026** để có dữ liệu demo. Chế độ này lưu dữ liệu trong trình duyệt của máy đó.
-2. **Nạp đúng dữ liệu hiện tại:** vào **Thiết lập & sao lưu → ⬆ Phục hồi từ file .json**, chọn `data/SaoLuu_GiaThanh_2026-11-04.json`.
+2. **Nạp đúng dữ liệu hiện tại:** vào **Thiết lập & sao lưu → ⬆ Phục hồi từ file .json**, chọn `data/SaoLuu_GiaThanh_2026-11-12.json`.
 3. **Dựng thành artifact trên claude.ai:**
    - Xuất bản `artifact/index.html`, khai báo capabilities theo `artifact_manifest.json`.
    - Mở artifact, rồi phục hồi từ file `.json` như bước 2. Cách khác: ghi từng tệp `data/db_gt/<id>.json` vào bộ sưu tập `gt` với id = tên tệp.
