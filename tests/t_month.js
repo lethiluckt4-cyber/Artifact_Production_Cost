@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await (await b.newContext({viewport:{width:1400,height:900}})).newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000});
+ await pg.evaluate(()=>{ state.sales.push({_id:uid(), ngay:'2026-10-20', ma:'TP_QBN_1', sl:150, donGia:20000, doanhSo:3000000, hoaDon:'X1', khach:'K'},{_id:uid(), ngay:'2026-11-05', ma:'TP_BBN', sl:500, donGia:20000, doanhSo:1e7, hoaDon:'X2', khach:'K'}); changed(); selKy='2026'; view='giathanh'; lastView='giathanh'; render(); runCalc(); });
+ await pg.waitForTimeout(200);
+ console.log('Mặc định:', await pg.evaluate(()=>[document.querySelector('#rcM').value, [...document.querySelector('#rcM').options].map(o=>o.text).slice(7,12).join(' | '), document.querySelector('#rcGo').disabled]));
+ await pg.selectOption('#rcM','11'); await pg.waitForTimeout(100);
+ console.log('Chọn T11:', await pg.evaluate(()=>[document.querySelector('#rcGo').disabled, document.querySelector('#rcState').innerText]));
+ await pg.selectOption('#rcM','06'); console.log('Chọn T6 (đã tính):', await pg.evaluate(()=>document.querySelector('#rcGo').disabled));
+ await pg.selectOption('#rcM','10'); await pg.click('#rcGo'); await pg.waitForTimeout(4000); await pg.evaluate(()=>closeModal());
+ await pg.evaluate(()=>runCalc()); await pg.waitForTimeout(200); console.log('Sau tính T10, mặc định:', await pg.evaluate(()=>[document.querySelector('#rcM').value, document.querySelector('#rcGo').disabled]));
+ console.log('errs', errs); await b.close(); })();

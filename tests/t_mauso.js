@@ -1,0 +1,11 @@
+const { chromium } = require('playwright'); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1500,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(1500);
+ const docs=JSON.parse(fs.readFileSync('/home/claude/work/audit/live.json','utf8'));
+ const r=await pg.evaluate(docs=>{ fromDocs(docs); calcCache=null; closeModal(); view='d_purchases'; selKy='2026'; render();
+   const ths=[...document.querySelectorAll('#main table thead th')].map(t=>t.textContent.replace('▼','').trim()).slice(0,9);
+   const g=GRID.purchases; const a=state.purchases.find(x=>x.hoaDon==='1' && x.ma==='TEM_HSN'); a.maNCC='NCC_MN'; g.onEdit(a,'maNCC'); a.mauSo='1'; a.kyHieu='C26TMN'; g.onEdit(a,'mauSo'); g.onEdit(a,'kyHieu');
+   const sameInv=state.purchases.filter(x=>x.hoaDon==='1' && x.ncc===a.ncc).map(x=>x.ma+':'+x.mauSo+'/'+x.kyHieu+'/'+x.maNCC); const otherInv=state.purchases.filter(x=>x.ncc===a.ncc && x.hoaDon!=='1').map(x=>x.hoaDon+':'+x.maNCC+'/'+(x.mauSo||'-'));
+   const d=toDocs(); const back=JSON.parse(JSON.stringify(d)); fromDocs(back); const kept=state.purchases.filter(x=>x.maNCC==='NCC_MN').length;
+   return {ths, sameInv, otherInv, kept}; }, docs);
+ console.log(JSON.stringify(r,null,1)); console.log('errs',errs); await b.close(); })();

@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6000);
+ await pg.evaluate(()=>{ document.querySelectorAll('.toast').forEach(t=>t.remove()); view='banhang'; selKy='2026'; render(); });
+ const sumRow = await pg.evaluate(()=>[...document.querySelector('#main tbody tr[data-i]').children].map(t=>t.textContent).join(' | '));
+ await pg.click('#main tbody tr[data-i] td.lnkc'); await pg.waitForTimeout(300);
+ const tot = await pg.evaluate(()=>[...document.querySelector('#modal tr.tot').children].map(t=>t.textContent).join(' | '));
+ console.log('Dòng tổng hợp:', sumRow); console.log('Tổng chi tiết:', tot, '| tiêu đề:', await pg.evaluate(()=>document.querySelector('#modal h3').textContent+' / '+document.querySelector('#modal .mut.small').textContent));
+ await (await pg.$('#modal .in')).screenshot({path:'/home/claude/work/shots/bh1.png'});
+ console.log('errs', errs); await b.close(); })();

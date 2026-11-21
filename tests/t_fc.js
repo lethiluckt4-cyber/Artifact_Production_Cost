@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6000);
+ await pg.evaluate(()=>{ document.querySelectorAll('.toast').forEach(t=>t.remove()); view='d_sales'; selKy='2026-03'; render(); });
+ await pg.click('#add'); await pg.click('#frmX'); await pg.waitForTimeout(100); console.log('Chưa gõ, ✕ → đóng ngay:', await pg.evaluate(()=>!document.querySelector('#modal .modal') && !editRow));
+ await pg.click('#add'); await pg.fill('#modal .ed[data-k="hoaDon"] .ci','HD-THU'); await pg.click('#frmX'); await pg.waitForTimeout(100);
+ console.log('Đã gõ, ✕ → hỏi:', await pg.evaluate(()=>(document.querySelector('#modal h3')||{}).textContent));
+ await pg.click('#gStay'); await pg.waitForTimeout(100); console.log('Ở lại → hộp còn, giữ số:', await pg.evaluate(()=>(document.querySelector('#modal .ed[data-k="hoaDon"] .ci')||{}).value));
+ await pg.keyboard.press('Escape'); await pg.waitForTimeout(100); console.log('Esc → hỏi:', await pg.evaluate(()=>(document.querySelector('#modal h3')||{}).textContent)); await pg.click('#gDrop'); await pg.waitForTimeout(100);
+ console.log('Bỏ → đóng, không thêm dòng:', await pg.evaluate(()=>[!document.querySelector('#modal .modal'), editRow, state.sales.some(r=>r.hoaDon==='HD-THU')]));
+ console.log('errs', errs); await b.close(); })();

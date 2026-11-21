@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}});
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6000);
+ await pg.evaluate(()=>{ view='d_bom'; render(); }); await pg.waitForTimeout(300);
+ let td=await pg.$$('#main td.act'); await td[0].scrollIntoViewIfNeeded(); const tr=await td[0].evaluateHandle(e=>e.closest('tr')); const bb=await td[0].boundingBox();
+ await pg.screenshot({path:'/home/claude/work/shots/ic7.png', clip:{x:Math.max(0,bb.x-500), y:Math.max(0,bb.y-60), width:Math.min(1440-Math.max(0,bb.x-500), 500+bb.width+10), height:160}});
+ await pg.evaluate(()=>{ editRow=state.bom[0]._id; render(); }); await pg.waitForTimeout(300);
+ td=await pg.$$('#main td.act'); await td[0].scrollIntoViewIfNeeded(); const b2=await td[0].boundingBox();
+ await pg.screenshot({path:'/home/claude/work/shots/ic8.png', clip:{x:Math.max(0,b2.x-500), y:Math.max(0,b2.y-60), width:Math.min(1440-Math.max(0,b2.x-500), 500+b2.width+10), height:160}});
+ await b.close(); })();

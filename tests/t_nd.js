@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1500,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(5000);
+ await pg.evaluate(()=>{ document.querySelectorAll('.toast').forEach(t=>t.remove()); view='nxt'; selKy='2026'; render(); }); await pg.waitForTimeout(300);
+ const tr=(await pg.$$('#main tbody tr[data-i]'))[2]; await tr.click(); await pg.waitForTimeout(400);
+ const rowsN=async()=>pg.evaluate(()=>({n:document.querySelectorAll('#modal tbody tr').length, tot:document.querySelector('#modal tr.tot')?.textContent.slice(0,140), warn:document.querySelector('#modal .neg.small')?.textContent||''}));
+ console.log('năm', JSON.stringify(await rowsN()));
+ await pg.selectOption('#ndKy','2026-03'); await pg.waitForTimeout(300); console.log('T3', JSON.stringify(await rowsN()));
+ await pg.screenshot({path:'/home/claude/work/shots/nd.png'});
+ await pg.selectOption('#ndKy','R'); await pg.fill('#ndF','2026-02-10'); await pg.fill('#ndT','2026-04-20'); await pg.click('#ndGo'); await pg.waitForTimeout(300); console.log('R', JSON.stringify(await rowsN()), await pg.evaluate(()=>[document.querySelector('#ndKy').value, document.querySelector('#modal tbody tr:nth-child(2) td')?.textContent, selKy]));
+ console.log(errs); await b.close(); })();

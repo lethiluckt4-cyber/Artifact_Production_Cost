@@ -1,0 +1,12 @@
+const { chromium } = require('playwright'); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(2000);
+ const docs=JSON.parse(fs.readFileSync('/home/claude/work/import/live_sim.json','utf8')); delete docs._nap; docs.settings=JSON.parse(fs.readFileSync('settings_live.json','utf8')); docs.settings.daDeXuat=[]; docs.settings.dxSig={}; docs.settings.planPrm={canDoi:0};
+ ['02','03','04','05','06'].forEach(m=>{ delete docs['c_2026-'+m].tangCa; });
+ await pg.evaluate(d=>{ fromDocs(d); calcCache=null; closeModal(); resetProposal('2026-01'); calcCache=null; calc(); const pl=buildPlan('2026'); const ms=Array.from({length:11},(_,i)=>`2026-${String(i+1).padStart(2,'0')}`); applyPlanCore(pl, ms); fixLateOrders(ms); calcCache=null; }, docs);
+ const r=await pg.evaluate(()=>{ const out=[]; for (let i=1;i<=10;i++){ const k=`2026-${String(i).padStart(2,'0')}`; selKy=k; calcCache=null;
+     const mv=buildMoveProposal(k); if (mv.rows.length) applyMoveCore(mv.rows); calcCache=null; const ad=buildAdjProposal(P()); const rows=ad.rows.filter(r=>kyXong(adjKyOf(r))); calcCache=null; const pre=P(); const npre=[...new Set(pre.lines.filter(l=>l.tong>1e-9 && !l.dg).map(l=>l.maVT+(l.prod?'(prod)':'')))]; if (rows.length) applyAdjCore({rows}); calcCache=null; out.push(k+' TRƯỚC cân đối thiếu giá: '+npre.join(',')+' | '+npre.map(m=>{ const ma=m.replace('(prod)',''); const n=pre.nxt.find(z=>z.ma===ma)||{}; return ma+' đầu '+(n.openSL||0).toFixed(1)+' nhập '+(n.nhapSL||0).toFixed(1)+' cuối '+(n.closeSL||0).toFixed(1)+' pBQ='+pre.pBQ[ma]+' uc='+pre.unitCost[ma]; }).join(' ; '));
+     const p=P(); const np=p.lines.filter(l=>l.tong>1e-9 && !l.dg); const g={}; np.forEach(l=>{ const x=g[l.maVT]||(g[l.maVT]={n:0,q:0}); x.n++; x.q+=l.tong; });
+     const det=Object.entries(g).map(([ma,x])=>{ const n=p.nxt.find(z=>z.ma===ma)||{}; return `${ma}: ${x.n} dòng, SL ${x.q.toFixed(1)} | đầu ${(n.openSL||0).toFixed(1)}/${Math.round(n.openTT||0)} nhập ${(n.nhapSL||0).toFixed(1)}/${Math.round(n.nhapTT||0)} cuối ${(n.closeSL||0).toFixed(1)} pBQ=${p.pBQ[ma]} uc=${p.unitCost[ma]}`; });
+     out.push(k+' mv='+mv.rows.length+' adj='+rows.length+' | '+(det.join(' ; ')||'OK')); } return out; });
+ r.forEach(x=>console.log(x)); console.log('errs',errs); await b.close(); })();

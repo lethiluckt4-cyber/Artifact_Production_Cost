@@ -1,0 +1,11 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6000);
+ await pg.evaluate(()=>{ document.querySelectorAll('.toast').forEach(t=>t.remove()); view='canhbao'; document.querySelector('#main').dataset.cbt='ng'; render(); }); await pg.waitForTimeout(200);
+ const st=()=>pg.evaluate(()=>({sua:document.querySelectorAll('#main td[contenteditable]').length, vang:document.querySelectorAll('#main td.ed').length, nut:[...document.querySelectorAll('.toolbar .tbl-r .btn')].map(b=>b.textContent.trim()).join(','), xoa:document.querySelectorAll('[data-rm]').length, them:!!document.querySelector('#ngAdd')}));
+ console.log('Mở:', JSON.stringify(await st())); await pg.screenshot({path:'/home/claude/work/shots/ng1.png', clip:{x:236,y:0,width:1204,height:520}});
+ await pg.click('#ngE'); console.log('Sửa:', JSON.stringify(await st()));
+ await pg.evaluate(()=>{ const td=document.querySelector('td[data-f="max"]'); td.textContent='200'; }); await pg.click('#ngSave'); await pg.waitForTimeout(150);
+ console.log('Lưu:', JSON.stringify(await st()), await pg.evaluate(()=>nguongList()[0].max));
+ await pg.click('#ngE'); await pg.click('[data-rm="0"]'); await pg.waitForTimeout(100); console.log('Xóa 1 dòng → còn', await pg.evaluate(()=>nguongList().length)); await pg.click('#ngC'); await pg.waitForTimeout(100);
+ console.log('Hủy → khôi phục:', await pg.evaluate(()=>[nguongList().length, nguongList()[0].max]), JSON.stringify(await st()));
+ console.log('errs', errs); await b.close(); })();

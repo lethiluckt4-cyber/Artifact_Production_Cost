@@ -1,0 +1,13 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6000);
+ await pg.evaluate(()=>{ document.querySelectorAll('.toast').forEach(t=>t.remove()); view='nxt'; selKy='2026'; render(); });
+ await pg.click('#nhBtn'); await pg.waitForTimeout(100); await pg.screenshot({path:'/home/claude/work/shots/nh1.png', clip:{x:236,y:0,width:900,height:400}});
+ await pg.evaluate(()=>{ [...document.querySelectorAll('#khoPop input')].forEach(x=>x.checked=['Vải','Phụ liệu'].includes(x.value)); }); await pg.click('#khoOk'); await pg.waitForTimeout(200);
+ const r=await pg.evaluate(()=>({n:document.querySelectorAll('#main tbody tr[data-i]').length, nhom:[...new Set(state.items.filter(i=>[...document.querySelectorAll('#main tbody tr[data-i]')].map(tr=>tr.children[1].textContent).includes(i.ma)).map(i=>i.nhom))], btn:document.querySelector('#nhBtn').textContent}));
+ console.log('Chọn Vải + Phụ liệu:', JSON.stringify(r));
+ await pg.click('#khoBtn'); await pg.evaluate(()=>{ [...document.querySelectorAll('#khoPop input')].forEach(x=>x.checked=x.value==='152'); }); await pg.click('#khoOk'); await pg.waitForTimeout(150);
+ console.log('+ kho 152:', await pg.evaluate(()=>document.querySelectorAll('#main tbody tr[data-i]').length));
+ await pg.click('#nhBtn'); await pg.click('#khoAllA'); await pg.waitForTimeout(150); console.log('Nhóm tất cả:', await pg.evaluate(()=>[document.querySelectorAll('#main tbody tr[data-i]').length, document.querySelector('#nhBtn').textContent]));
+ await pg.screenshot({path:'/home/claude/work/shots/nh2.png', clip:{x:236,y:0,width:1204,height:200}});
+ console.log('errs', errs); await b.close(); })();

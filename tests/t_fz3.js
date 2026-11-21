@@ -1,0 +1,13 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await (await b.newContext({viewport:{width:1200,height:700}})).newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000});
+ await pg.evaluate(()=>{ selKy='2026-06'; view='nxt'; render(); });
+ const fbs=await pg.$$('#main .tw > table thead th .xfb'); await fbs[3].click(); await pg.click('#xfpop [data-fz]'); await pg.waitForTimeout(100);
+ const a=await pg.evaluate(()=>[...document.querySelectorAll('#main .tw > table thead th')].filter(h=>h.classList.contains('fz')).length);
+ await pg.evaluate(()=>{ view='tongquan'; render(); view='nxt'; render(); }); await pg.waitForTimeout(100);
+ const bb=await pg.evaluate(()=>[...document.querySelectorAll('#main .tw > table thead th')].filter(h=>h.classList.contains('fz')).length);
+ await pg.evaluate(()=>{ document.querySelector('#main .tw').scrollLeft=500; }); await pg.waitForTimeout(150); await pg.screenshot({path:'/home/claude/work/shots/fz_nxt4.png'});
+ const fb2=await pg.$$('#main .tw > table thead th .xfb'); await fb2[0].click(); await pg.click('#xfpop [data-fz1]');
+ const c=await pg.evaluate(()=>[...document.querySelectorAll('#main .tw > table thead th, #main .tw > table tbody tr:first-child td')].filter(h=>h.classList.contains('fz')).length);
+ await pg.evaluate(()=>{ selKy='2026-04'; view='d_gc'; render(); document.querySelector('#main .tw').scrollLeft=400; }); await pg.waitForTimeout(200); await pg.screenshot({path:'/home/claude/work/shots/fz_gc1.png'});
+ console.log({sauChon:a, sauRender:bb, boVe1:c, errs}); await b.close(); })();

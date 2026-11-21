@@ -1,0 +1,12 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(5000);
+ console.log(await pg.evaluate(()=>{ calcCache=null; const c=calc(); const items=itemMap(); const f=Math.round; const L=[];
+   const Y=yearPeriod(c,'2026'); const ms=c.list.filter(k=>k.startsWith('2026')); const S=k=>ms.reduce((s,m)=>s+(c.periods[m][k]||0),0);
+   L.push('NĂM vs Σ tháng: 621 '+f(Y.sum621)+' / '+f(S('sum621'))+' · 155 '+f(Y.c154NK)+' / '+f(S('c154NK'))+' · DT '+f(Y.doanhSo)+' / '+f(S('doanhSo'))+' · lãi '+f(Y.lai)+' / '+f(S('lai'))+' · tồn cuối '+f(Y.tonCuoi)+' / '+f(c.periods[ms[ms.length-1]].tonCuoi));
+   ms.forEach(k=>{ const P=c.periods[k]; const tpAm=P.nxt.filter(x=>(isFinal(items[x.ma])) && x.closeSL<-1e-9); const nvlAm=P.nxt.filter(x=>!isFinal(items[x.ma]) && !isProd(items[x.ma]) && x.closeSL<-1e-9);
+     const gv0=P.sales.filter(s=>!s.gv); const am=P.sales.filter(s=>s.tonNgay<0);
+     L.push(`${k}: 622=${f(P.cp.c622)} 627=${f(P.cp.c627)} lệnh=${P.orders.length} | TP âm ${tpAm.length} (${tpAm.slice(0,4).map(x=>x.ma+' '+x.closeSL).join(', ')}) | NVL âm ${nvlAm.length} | dòng bán GV=0: ${gv0.length} (${[...new Set(gv0.map(s=>s.ma))].slice(0,4).join(',')}) | dòng bán âm kho theo ngày: ${am.length} | DT ${f(P.doanhSo)} GVHB ${f(P.sales.reduce((s,x)=>s+x.sl*x.gv,0))} lãi% ${(P.doanhSo?P.lai/P.doanhSo*100:0).toFixed(1)} | thiếuTT ${f(P.thieuTT)} | DD ${f(P.ddDK)}→${f(P.ddCK)}`); });
+   const xk=c.list.map(k=>{ const P=c.periods[k]; const q=buildXK(P).reduce((s,r)=>s+r[13],0); const l=P.lines.reduce((s,x)=>s+x.tong,0); const nk=buildNK(P).reduce((s,r)=>s+r[13],0); return `${k}: XK ${f(q)}/${f(l)} NK ${f(nk)}/${f(P.slNK)} chung=${P.issues.length}`; });
+   L.push('File KT: '+xk.join(' · '));
+   return L.join('\n'); }));
+ await b.close(); })();

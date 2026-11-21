@@ -1,0 +1,4 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(5000);
+ console.log(await pg.evaluate(()=>{ calcCache=null; const c=calc(); const items=itemMap(); return ['2026-03','2026-07'].map(k=>{ const P=c.periods[k]; return k+': '+Object.keys(P.xuatSX).filter(ma=>Math.abs((P.pBQ[ma]||0)-(P.giaVon[ma]||0))>0.01).map(ma=>{ const x=P.nxt.find(z=>z.ma===ma); return `${ma}[${items[ma]&&items[ma].nhom}] pBQ=${(P.pBQ[ma]||0).toFixed(1)} gv=${(P.giaVon[ma]||0).toFixed(1)} open=${x.openSL}/${Math.round(x.openTT)} nhap=${x.nhapSL}/${Math.round(x.nhapTT)} xSX=${P.xuatSX[ma]}`; }).join(' ; '); }).join('\n'); }));
+ await b.close(); })();

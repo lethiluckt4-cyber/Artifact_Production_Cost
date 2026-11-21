@@ -1,0 +1,11 @@
+const { chromium } = require('playwright'); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1500,height:950}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(2000);
+ const docs=JSON.parse(fs.readFileSync('/home/claude/work/import/nap_final_dk2026.json','utf8')); delete docs._nap; docs.settings=JSON.parse(fs.readFileSync('settings_live.json','utf8')); docs.settings.daDeXuat=[]; docs.settings.dxSig={};
+ await pg.evaluate(d=>{ fromDocs(d); calcCache=null; closeModal(); resetProposal('2026-01'); calcCache=null; calc(); const pl=buildPlan('2026'); applyPlanCore(pl, Array.from({length:11},(_,i)=>`2026-${String(i+1).padStart(2,'0')}`)); calcCache=null; view='d_adjustments'; selKy='2026'; document.querySelector('#main').dataset.adt='td'; render(); }, docs);
+ await pg.waitForTimeout(800);
+ console.log(await pg.$$eval('#main [data-adt]',x=>x.map(e=>e.textContent+(e.classList.contains('act')?'*':''))));
+ console.log(await pg.$$eval('#main table thead th',x=>x.map(e=>e.textContent).join(' | ')));
+ console.log(await pg.$$eval('#main table tbody tr',x=>[x.length, ...x.slice(0,2).map(e=>e.innerText.replace(/\t/g,' | ')), x[x.length-1].innerText.replace(/\t/g,' | ')]));
+ await pg.screenshot({path:'/home/claude/work/adjauto.png'});
+ console.log('errs',errs); await b.close(); })();

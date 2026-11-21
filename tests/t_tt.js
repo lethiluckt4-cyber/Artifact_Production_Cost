@@ -1,0 +1,3 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000});
+ console.log(await pg.evaluate(()=>{ const out=[]; for (const k of ['2026','2026-06']) { selKy=k; NAV.filter(n=>n.id).forEach(n=>{ view=n.id; selKy=k; render(); out.push(k+' '+n.id+': '+document.querySelector('#main>.top h2').textContent); }); } return out.join('\n'); })); console.log(errs); await b.close(); })();

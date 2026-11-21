@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6000);
+ await pg.evaluate(()=>{ document.querySelectorAll('.toast').forEach(t=>t.remove()); view='d_opening'; render(); }); await pg.waitForTimeout(150);
+ console.log('Dòng tổng:', await pg.evaluate(()=>[...document.querySelector('#main tr.tot').children].map(t=>t.textContent).filter(Boolean).join(' | ')), '| kiểm:', await pg.evaluate(()=>Object.values(state.opening.rows).reduce((s,o)=>s+num(o.tt),0).toLocaleString('vi-VN')));
+ const n0=await pg.evaluate(()=>Object.keys(state.opening.rows).length); await pg.click('#opSelAll'); console.log('Chọn tất cả:', await pg.evaluate(()=>[document.querySelectorAll('[data-osel]:checked').length, $('#opDelSel').textContent]));
+ await pg.click('#opSelAll'); await pg.check('[data-osel] >> nth=0'); await pg.click('#opDelSel'); await pg.click('#mo'); await pg.waitForTimeout(150); console.log('Xóa 1:', n0, '→', await pg.evaluate(()=>Object.keys(state.opening.rows).length));
+ await pg.screenshot({path:'/home/claude/work/shots/op1.png', clip:{x:236,y:0,width:1204,height:300}});
+ await pg.evaluate(()=>{ view='nxt'; document.querySelector('#main').dataset.nt='ct'; render(); }); await pg.click('#refresh').catch(e=>console.log('no refresh btn')); await pg.waitForTimeout(800);
+ console.log('Sau làm mới: view', await pg.evaluate(()=>view), 'tab', await pg.evaluate(()=>document.querySelector('#main').dataset.nt), '|', await pg.evaluate(()=>[...document.querySelectorAll('.toast')].map(t=>t.textContent).pop()));
+ console.log('errs', errs); await b.close(); })();

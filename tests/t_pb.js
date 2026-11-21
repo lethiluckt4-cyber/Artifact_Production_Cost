@@ -1,0 +1,3 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(5000);
+ console.log(await pg.evaluate(()=>{ const c=calc(); const P=c.periods['2026-02']; const l=P.lines.find(l=>l.maVT==='THUN'); return JSON.stringify({pBQ:P.pBQ['THUN'], keys:Object.keys(P.pBQ).length, dg:l&&l.dg, gv:(P.nxt.find(x=>x.ma==='THUN')||{}).gv, adj:state.adjustments.slice(0,3).map(a=>[a.ngaySX,a.maVT,a.dieuChinh, (c.periods[kyOf(a.ngaySX)]||{pBQ:{}}).pBQ[a.maVT]])}); })); await b.close(); })();

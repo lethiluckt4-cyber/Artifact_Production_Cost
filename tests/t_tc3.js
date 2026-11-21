@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6500);
+ await pg.evaluate(()=>{ view='d_purchases'; selKy='2026-03'; render(); }); await pg.click('#tblCfg');
+ console.log('ô bị khóa:', await pg.evaluate(()=>document.querySelectorAll('#tcList input:disabled').length));
+ await pg.evaluate(()=>{ const x=[...document.querySelectorAll('#tcList [data-tc]')].find(i=>i.parentElement.textContent.trim()==='Mã hàng'); x.click(); }); await pg.click('#tcOk');
+ const th=()=>pg.evaluate(()=>[...document.querySelectorAll('#main .tw > table thead th')].map(t=>t.textContent.replace('▼','').trim()).filter(t=>t.startsWith('Mã hàng')).length);
+ console.log('Ẩn Mã hàng:', await th()); await pg.click('#add'); console.log('Thêm dòng mới → Mã hàng hiện:', await th());
+ await pg.keyboard.press('Escape'); await pg.evaluate(()=>{ editRow=null; state.purchases=state.purchases.filter(r=>!r._new); render(); }); console.log('Hủy → ẩn lại:', await th());
+ await pg.evaluate(()=>{ state.settings.uiHide={}; }); console.log(errs); await b.close(); })();

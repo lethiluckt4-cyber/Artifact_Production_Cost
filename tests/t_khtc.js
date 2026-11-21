@@ -1,0 +1,12 @@
+const { chromium } = require('playwright'); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1500,height:950}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(2000);
+ const docs=JSON.parse(fs.readFileSync('/home/claude/work/import/nap_final_dk2026.json','utf8')); delete docs._nap; docs.settings=JSON.parse(fs.readFileSync('settings_live.json','utf8'));
+ Object.entries({"2026-02":50,"2026-03":2200,"2026-04":2250,"2026-05":550,"2026-06":1400}).forEach(([k,v])=>docs['c_'+k].tangCa=v);
+ await pg.evaluate(d=>{ fromDocs(d); calcCache=null; closeModal(); view='kehoach'; selKy='2026'; render(); }, docs); await pg.waitForTimeout(800);
+ const t=await pg.evaluate(()=>[...document.querySelectorAll('#main table')].map(tb=>[...tb.querySelectorAll('thead th')].map(t=>t.textContent).join('|')).find(h=>h.includes('Tăng ca')));
+ console.log(t); console.log(await pg.evaluate(()=>{ const tb=[...document.querySelectorAll('#main table')].find(tb=>tb.textContent.includes('Tăng ca')); return [...tb.querySelectorAll('tbody tr')].slice(0,6).map(r=>r.innerText.replace(/\t/g,' | ')); }));
+ await pg.evaluate(()=>{ const tb=[...document.querySelectorAll('#main table')].find(tb=>tb.textContent.includes('Tăng ca')); tb.scrollIntoView(); }); await pg.screenshot({path:'/home/claude/work/kh_tc.png'});
+ await pg.click('#cnE'); await pg.waitForTimeout(300); await pg.fill('[data-tc="2026-07"]','100'); await pg.click('#cnSave'); await pg.waitForTimeout(300);
+ console.log('saved', await pg.evaluate(()=>[state.costs['2026-07'].tangCa, capMonth('2026-07')]), JSON.stringify(await pg.evaluate(()=>toDocs()['c_2026-07'])));
+ console.log('errs',errs); await b.close(); })();

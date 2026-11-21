@@ -1,0 +1,5 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(4000);
+ console.log(await pg.evaluate(()=>{ state.bom=state.bom.filter(r=>r.maTP!=='QB881_6XL-7XL'); const n0=state.bom.length; const aoa=[['Loại ĐM','Mã TP','Mã NVL','SL TP/lần','SL NVL/lần'],['DM','QB881_6XL-7XL','VAI_DKCG_1',1,0.7],['DM','QB881_6XL-7XL','VALO',1,0.7],['DM','QB881_6XL-7XL','THUN',1,0.7],['DM','QB881_6XL-7XL','DALU',1,1],['DM','QB881_6XL-7XL','TUZI',1,1],['DM','QB881_6XL-7XL','TEM_SPN',1,1],['DM','QB881_6XL-7XL','TEM_TTG',1,1]];
+   const r=importAOA('bom', aoa); return JSON.stringify({r:r&&(r.msg||r.n||r), added:state.bom.length-n0, rows:state.bom.filter(x=>x.maTP==='QB881_6XL-7XL').map(x=>[x.maNVL,x.slTP,x.slNVL,x.loai])}); }));
+ console.log(errs); await b.close(); })();

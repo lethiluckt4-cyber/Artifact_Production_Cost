@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await (await b.newContext({viewport:{width:1500,height:900}})).newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000});
+ const snap=()=>pg.evaluate(()=>{ const c=calc(); const P=c.periods['2026-04']; const x=P.nxt.find(z=>z.ma==='VAI_IN'); const y=P.nxt.find(z=>z.ma==='VAI_DKCG_1'); const g=P.gcNhan[0]; const o6=c.periods['2026-06']; return {gc:state.gc.map(r=>[r.soCT,r.slGui,r.slNhan]), guiTT:Math.round(sum(P.gcGui,z=>z.tt)), nhanVAI_IN:[x.nhapSL, Math.round(x.nhapTT), Math.round(x.gv)], VAI_DKCG_xuat:[y.xuatSL, Math.round(y.xuatTT)], gt154_T4:Math.round(P.sum154), gt154_T6:Math.round(o6.sum154), dirty:calcDirty}; });
+ console.log('Trước:', JSON.stringify(await snap()));
+ await pg.evaluate(()=>{ selKy='2026-04'; view='d_gc'; render(); });
+ await pg.click('[data-edit]'); await pg.click('td.ed[data-k="slGui"]'); await pg.keyboard.press('Control+A'); await pg.keyboard.type('4000'); await pg.click('[data-save]'); await pg.waitForTimeout(300);
+ console.log('Sau lưu (chưa bấm Tính):', JSON.stringify(await snap()));
+ console.log('Màn hình GC:', await pg.evaluate(()=>document.querySelector('#main tbody tr').innerText.replace(/\s+/g,' ')));
+ console.log('errs', errs); await b.close(); })();

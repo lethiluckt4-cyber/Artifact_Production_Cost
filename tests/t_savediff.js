@@ -1,0 +1,10 @@
+const { chromium } = require('playwright');
+const f=process.argv[2];
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}});
+ await pg.goto('file://'+f); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6500);
+ const hide = process.argv[3]==='hide';
+ await pg.evaluate(h=>{ view='d_purchases'; selKy='2026-03'; if (h) { state.settings.uiHide={d_purchases:['Ngày hóa đơn']}; state.settings.uiOrder={d_purchases:['Số hóa đơn']}; } render(); }, hide);
+ const r = await pg.evaluate(()=>{ const id=state.purchases.find(r=>kyOf(r.ngayNhap)==='2026-03')._id; return [id, JSON.stringify(state.purchases.find(r=>r._id===id))]; });
+ await pg.evaluate(id=>{ editRow=id; render(); }, r[0]); await pg.click(`[data-save="${r[0]}"]`); await pg.waitForTimeout(200);
+ console.log(await pg.evaluate(([id,js])=>{ const x=JSON.parse(js), y=state.purchases.find(r=>r._id===id); return Object.keys(y).filter(k=>k[0]!=='_' && String(x[k])!==String(y[k])).map(k=>`${k}: ${x[k]} → ${y[k]}`); }, r));
+ await b.close(); })();

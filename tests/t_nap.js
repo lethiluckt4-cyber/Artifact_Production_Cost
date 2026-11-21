@@ -1,0 +1,10 @@
+const { chromium } = require('playwright'); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1400,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message)); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(5000);
+ const docs=JSON.parse(fs.readFileSync('/home/claude/work/import/nap_raw.json','utf8'));
+ const r=await pg.evaluate(d=>{ const before={subs:state.subs.length, cal:state.cal.length, caps:state.caps.length};
+   napImport(d); const g=autoGcLots(); calcCache=null;
+   const out={before, after:{items:state.items.length,bom:state.bom.length,pur:state.purchases.length,sales:state.sales.length,orders:state.orders.length,adj:state.adjustments.length,gc:state.gc.length,subs:state.subs.length,cal:state.cal.length,costs:Object.keys(state.costs).length, opening:Object.keys(state.opening.rows).length}, gc:g, gcRows:state.gc.map(x=>[x.soCT,x.ngayGui,x.ngayNhan,x.maGui,x.slGui,x.maNhan,x.slNhan,x.maDV,x.slDV])};
+   const D=toDocs(); const keep=Object.fromEntries(Object.entries(D).filter(([k])=>!['settings','subs','caps','cal'].includes(k) && !k.startsWith('i_')));
+   keep._nap=d._nap; out.docs=keep; return out; }, docs);
+ fs.writeFileSync('/home/claude/work/import/nap_final.json', JSON.stringify(r.docs));
+ delete r.docs; console.log(JSON.stringify(r,null,1)); console.log(errs); await b.close(); })();

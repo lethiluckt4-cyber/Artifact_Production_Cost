@@ -1,0 +1,2 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message+' '+(e.stack||'').split('\n')[1])); pg.on('console',m=>{ if(m.type()==='error') errs.push('console: '+m.text()); }); await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForTimeout(5000); console.log(errs.slice(0,5)); await b.close(); })();

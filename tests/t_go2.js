@@ -1,0 +1,17 @@
+const { chromium } = require('playwright'); const fs=require('fs');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1500,height:950}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(2500);
+ const docs=JSON.parse(fs.readFileSync('/home/claude/work/import/nap_final_dk2026.json','utf8')); delete docs._nap; docs.settings=JSON.parse(fs.readFileSync('settings_live.json','utf8')); docs.settings.daDeXuat=[]; docs.settings.dxSig={};
+ const ddh=['TP_QB_QV01','TP_QB_QV02','TP_BVR_AV12','TP_BN_AV02_M3XL','TP_BN_AV02_M5XL']; docs.items.rows.forEach(r=>{ if (ddh.includes(r[0])) { r[2]='Thành phẩm-DDH'; r[5]='DDH'; } });
+ docs.bom.rows.push(...[['VAI_DKCG_1',0.7],['VALO',0.7],['THUN',0.7],['DALU',1],['TUZI',1],['TEM_SPN',1],['TEM_TTG',1]].map(([n,q])=>['DM','QB881_6XL-7XL',n,1,q,'',0,'','','','','']));
+ await pg.evaluate(d=>{ fromDocs(d); state.cal=d.cal?state.cal:state.cal; changed(); calcCache=null; closeModal(); }, docs);
+ await pg.evaluate(()=>{ view='giathanh'; selKy='2026-01'; render(); runCalcFor({reset:true}); });
+ await pg.waitForFunction(()=>{ const h=document.querySelector('#modal h3'); return h && h.textContent.includes('Đã tính xong'); },null,{timeout:300000});
+ const z=await pg.evaluate(()=>{ closeModal(); calcCache=null; const c=calc(); const pl=buildPlan('2026'); const it=itemMap(); const o=[];
+   Object.keys(pl.months||{}).sort().forEach(k=>{ const M=pl.months[k]; const P=c.periods[k]; const sold=state.sales.filter(r=>kyOf(r.ngay)===k).reduce((a,r)=>a+num(r.sl)*(num((it[r.ma]||{}).heSo)||1),0); const made=state.orders.filter(x=>kyOf(x.ngaySX)===k).reduce((a,x)=>a+num(x.slKH)*(num((it[x.maTP]||{}).heSo)||1),0);
+     o.push([k, Math.round(M.cap||M.nangLuc||0), Math.round(sold), Math.round(made), JSON.stringify(Object.keys(M).slice(0,14))].join(' | ')); }); 
+   const P=c.periods['2026-04']; const neg=P.nxt.filter(x=>x.closeSL<-1e-9 && isFinal(it[x.ma])).slice(0,8).map(x=>x.ma+' đầu '+x.openSL+' nhập '+x.nhapSL+' xuất '+x.xuatSL+' cuối '+x.closeSL);
+   const lates=state.orders.filter(x=>x.maTP==='QB807_M-3XL').map(x=>x.maLenh+' '+x.ngayXuatNVL+'→'+x.ngaySX+' '+x.slKH+' '+x.loaiLenh);
+   return {o, neg, lates}; }); console.log(z.o.join('\n')); console.log(z.neg.join('\n')); console.log(z.lates.join('\n'));
+ const r=await pg.evaluate(()=>{ closeModal(); calcCache=null; const c=calc(); const out=[]; c.list.forEach(k=>{ const P=c.periods[k]; const am=P.nxt.filter(x=>x.closeSL<-1e-9); let mv=0; try{ mv=kyXong(k)?buildMoveProposal(k).rows.length:0; }catch(e){} let ad=0; try{ selKy=k; ad=buildAdjProposal(P).rows.length; }catch(e){} out.push([k, P.orders.length, Math.round(P.sum154), Math.round(P.c154NK||0), am.length, am.filter(x=>isFinal(itemMap()[x.ma])).length, mv, ad, Math.round(P.thieuTT||0), Math.round((P.unalloc622||0)+(P.unalloc627||0))]); }); return {out, ord:state.orders.length, warn:c.warnings.slice(0,8).map(w=>w.loai+': '+w.ma+' '+w.nd)}; });
+ console.log('tháng | lệnh | CP154 | NK155 | mã âm | TP âm | chuyển kho | cân đối | thiếu NVL | chưa PB'); r.out.forEach(x=>console.log(x.join(' | '))); console.log('orders',r.ord); console.log(r.warn.join('\n')); console.log('errs',errs); await b.close(); })();

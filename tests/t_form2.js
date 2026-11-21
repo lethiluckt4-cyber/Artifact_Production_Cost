@@ -1,0 +1,18 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1440,height:900}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000}); await pg.waitForTimeout(6500);
+ await pg.evaluate(()=>{ document.querySelectorAll('.toast').forEach(t=>t.remove()); view='d_purchases'; selKy='2026-03'; render(); }); await pg.click('#add'); await pg.waitForTimeout(200);
+ const typ=async(k,t)=>{ await pg.click(`#modal .ed[data-k="${k}"] .ci`); await pg.keyboard.type(t); return pg.evaluate(k=>document.querySelector(`#modal .ed[data-k="${k}"] .ci`).value, k); };
+ console.log('NCC xổ xuống:', await pg.evaluate(()=>{ const i=document.querySelector('#modal .ed[data-k="ncc"] .ci'); const dl=document.getElementById(i.getAttribute('list')); return dl? dl.options.length+' tên, vd: '+[...dl.options].slice(0,2).map(o=>o.value).join(' | ') : 'không'; }));
+ await pg.fill('#modal .ed[data-k="ngayNhap"] .ci','21/03/2026'); await pg.fill('#modal .ed[data-k="ma"] .ci','VALO');
+ console.log('SL gõ "0,125" →', await typ('sl','0,125'));
+ console.log('Đơn giá gõ "1234567" →', await typ('donGia','1234567'));
+ console.log('Thành tiền live:', await pg.evaluate(()=>document.querySelector('#modal .ed[data-k="tt"] .ci').value));
+ /*x*/ await pg.fill('#modal .ed[data-k="sl"] .ci',''); console.log('SL gõ "2.5" →', await typ('sl','2.5'), '· TT live:', await pg.evaluate(()=>document.querySelector('#modal .ed[data-k="tt"] .ci').value));
+ await pg.fill('#modal .ed[data-k="ncc"] .ci','NCC Thử Mới');
+ await (await pg.$('#modal .in')).screenshot({path:'/home/claude/work/shots/frm3.png'});
+ await pg.click('#frmS'); await pg.waitForTimeout(300);
+ console.log('Đã lưu:', await pg.evaluate(()=>{ const r=state.purchases.find(r=>r.ncc==='NCC Thử Mới'); return r?[r.sl,r.donGia,r.tt]:null; }));
+ await pg.evaluate(()=>{ view='d_gc'; selKy='2026-07'; render(); }); await pg.click('#add'); await pg.waitForTimeout(200);
+ console.log('ĐV gia công xổ xuống:', await pg.evaluate(()=>{ const i=document.querySelector('#modal .ed[data-k="ncc"] .ci'); const dl=document.getElementById(i.getAttribute('list')); return dl? dl.options.length+' tên':'không'; }), '| SL gửi gõ 12000 →', await typ('slGui','12000'));
+ console.log('errs', errs); await b.close(); })();

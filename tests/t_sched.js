@@ -1,0 +1,8 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage(); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000});
+ const r=await pg.evaluate(()=>{ for (let mth=1;mth<=9;mth++){ const k=`2026-${String(mth).padStart(2,'0')}`; state.costs[k]=Object.assign(state.costs[k]||{}, {soCN:6, c622:42000000}); } calcCache=null; resetProposal('2026-01'); calcCache=null; calc(); const pl=buildPlan('2026'); applyPlanCore(pl, [...new Set(pl.list.map(x=>x.kyDX))]); calcCache=null; const c=calc();
+  const am=Object.values(c.periods).flatMap(P=>P.sales).filter(s=>s.tonNgay<-1e-9 && isFinal(itemMap()[s.ma])); const ords=Object.values(c.periods).flatMap(P=>P.orders); const tre=ords.filter(o=>o.tre); const multi=ords.filter(o=>(o.nhapLich||[]).length>1);
+  const P6=c.periods['2026-06']; const dayLoad={}; c.rcvAll.filter(r=>r.d.startsWith('2026-06')).forEach(r=>dayLoad[r.d]=(dayLoad[r.d]||0)+r.qd);
+  return {schedOn:c.schedOn, amBan:am.length, amVD:am.slice(0,5).map(s=>s.ngay+' '+s.ma+' '+s.tonNgay), tre:tre.length, treTheoLoai:tre.reduce((a,o)=>(a[o.loaiLenh]=(a[o.loaiLenh]||0)+1,a),{}), nhieuLan:multi.length, vdLich:multi.slice(0,2).map(o=>o.maLenh+' '+o.loaiLenh+' sl '+o.slTH+' cần '+o.ngaySX+': '+o.nhapLich.map(r=>r.d.slice(5)+'='+round(r.sl,2)).join(',')), tai6:Object.entries(dayLoad).slice(0,8), cap:capMonth('2026-06').perDay, chk: Math.round(P6.ddDK+P6.sum154-P6.ddCK-P6.c154NK), sumRcv:Math.round(sum(c.rcvAll,r=>r.tt)), sum154:Math.round(sum(ords,o=>o.c154))}; });
+ console.log(JSON.stringify(r,null,1)); console.log('errs', errs); await b.close(); })();

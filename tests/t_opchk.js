@@ -1,0 +1,16 @@
+const { chromium } = require('playwright');
+(async()=>{ const b=await chromium.launch(); const pg=await b.newPage({viewport:{width:1500,height:950}}); const errs=[]; pg.on('pageerror',e=>errs.push(e.message));
+ await pg.goto('file:///home/claude/work/app/index.html'); await pg.waitForFunction(()=>window.__booted===true,null,{timeout:30000});
+ const show = async tag => { const r = await pg.evaluate(()=>{ view='canhbao'; const m=document.querySelector('#main'); m.dataset.cbt='kq'; render(); const c=calc(); const it=itemMap(); return opChecks({c, p:P(), items:it, y:workYear(), incomplete:[], missing:{}, dupLenh:[], adjTP:[], dupS:[], noDong:[]}).filter(x=>x.n).map(x=>`${x.lvl} ${x.t}: ${x.n} | ${x.list.slice(0,2).join(' ; ')}`); }); console.log('== '+tag); r.forEach(x=>console.log('  '+x)); };
+ await pg.evaluate(()=>{ selKy='2026-03'; }); await show('Hiện trạng T3');
+ await pg.evaluate(()=>{ selKy='2026'; }); await show('Hiện trạng cả năm');
+ await pg.evaluate(()=>{ selKy='2026-03';
+   const s=state.sales.find(r=>kyOf(r.ngay)==='2026-02'); s.sl=num(s.sl)+5;
+   state.sales.push({_id:uid(), ngay:'2026-13-45', ma:s.ma, sl:1, doanhSo:100});
+   const o=state.orders.find(o=>kyOf(o.ngayXuatNVL)==='2026-03'); o.ngaySX='2026-03-01'; o.ngayXuatNVL='2026-03-10';
+   const pu=state.purchases.find(r=>kyOf(r.ngayNhap)==='2026-03'); pu.thueSuat=0.08; pu.thueGTGT=123;
+   calcCache=null; });
+ await show('Sau khi cố tình làm sai (sửa bán T2, ngày sai, lệnh ngược ngày, thuế lệch)');
+ await pg.screenshot({path:'/home/claude/work/shots/opchk.png', fullPage:false});
+ const xl = await pg.evaluate(()=>document.querySelector('#main').innerText.match(/Sai sót do thao tác[^\n]*/)[0]); console.log(xl);
+ console.log('Lỗi trang:', errs.length, errs.slice(0,3)); await b.close(); })();
