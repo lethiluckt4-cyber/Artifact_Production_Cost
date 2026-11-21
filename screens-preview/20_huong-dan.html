@@ -1,0 +1,365 @@
+<!-- Bản xem tĩnh: Hướng dẫn · kỳ 10/2026 · chụp từ artifact/index.html (không có JavaScript, nút bấm không chạy). Mã nguồn màn hình: xem src/README.md -->
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phần mềm Giá thành – Công ty Thiên Hồng</title>
+
+
+<style>
+:root{--font:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--font-h:var(--font);--fs:14px;--fs-t:13px;--fs-s:12.5px;--fs-h:19px;--fs-bar:18px;--fs-card:15px;--fs-big:21px;--fs-grp:11px;--fs-tag:12px;--bg:#f4f6f9;--card:#fff;--line:#e3e7ee;--txt:#1f2937;--mut:#6b7280;--pri:#1d4ed8;--pri2:#e8efff;--ok:#15803d;--warn:#b45309;--bad:#b91c1c;--yel:#fff7cc;--nav:#0f2a57}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);font-size:var(--fs);font-variant-numeric:tabular-nums;color:var(--txt);background:var(--bg)}
+a{color:var(--pri)}
+#app{display:flex;min-height:100vh}
+nav{width:236px;background:var(--nav);color:#dbe4f5;padding:14px 10px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;box-sizing:border-box;scrollbar-width:thin}
+nav h1{font-family:var(--font-h);font-weight:600;font-size:var(--fs-bar);margin:4px 8px 14px;color:#fff;line-height:1.3}
+nav h1 small{display:block;font-weight:400;color:#9fb3d6;font-size:var(--fs-s)}
+nav .grp{font-size:var(--fs-grp);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#7dd3fc;margin:16px 8px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:7px}
+nav .grp i{display:inline-block;width:9px;height:9px;border-radius:3px;background:currentColor;opacity:.9}
+nav button.top{font-weight:600;color:#fff}
+nav button.top::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#7dd3fc;margin-right:8px;vertical-align:middle}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:#dbe4f5;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:var(--fs)}
+nav button:hover{background:rgba(255,255,255,.08)}
+nav button.act{background:#fff;color:var(--nav);font-weight:600}
+main{flex:1;min-width:0;padding:16px 22px 14px}
+.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.top h2{margin:0;font-family:var(--font-h);font-weight:700;font-size:var(--fs-h);flex:1;line-height:1.3;color:var(--pri)}
+.top{margin-bottom:6px}
+.toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;padding:0;background:none;border:0}
+.toolbar .tbl-left,.toolbar .tbl-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.toolbar .tbl-right{margin-left:auto;justify-content:flex-end}
+.toolbar .tbl-left #q{width:220px;height:34px;border-radius:8px}
+.kyrow{display:flex;align-items:center;gap:16px;margin:0 0 8px;flex-wrap:wrap}.kyrow .tokyrow{display:flex;align-items:center;gap:8px}.kyrow .sel{background:#fff;border:1px solid var(--line);border-radius:8px;padding:4px 8px;font-size:var(--fs)}.kyrow select,.kyrow input{font-size:var(--fs);padding:4px 6px}
+.toolbar .btn{height:34px;border-radius:8px;background:#fff}.toolbar .btn.p{background:var(--pri)}
+.toolbar .btn.io{width:34px;justify-content:center;padding:0}
+.toolbar .sp{flex:1}
+.toolbar .btn{font-size:var(--fs);padding:5px 10px}
+.toolbar .sel{border:0;padding:0 2px;font-size:var(--fs);background:none}
+.toolbar select,.toolbar input{font-size:var(--fs);padding:4px 6px}
+.sel{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 8px}
+select,input[type=text],input[type=number],input[type=date],input[type=month],textarea{border:1px solid #cbd3df;border-radius:6px;padding:5px 7px;font:inherit;background:#fff;color:var(--txt)}
+input[type=number]{text-align:right}
+.btn{border:1px solid #cbd3df;background:#fff;border-radius:7px;padding:6px 11px;cursor:pointer;font:inherit;color:var(--txt)}
+.btn:hover{background:#f1f4f9}
+.btn.p{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn.p:hover{background:#1a43b8}
+.btn.d{color:var(--bad)}
+.btn.s{padding:3px 8px;font-size:var(--fs-s)}
+h3{font-size:var(--fs-card);font-weight:600} h4{font-size:var(--fs);font-weight:600}
+/* Nút có biểu tượng */
+.btn{display:inline-flex;align-items:center;gap:6px;line-height:1.35;vertical-align:middle}
+.btn svg.i{width:16px;height:16px;flex:none;color:#1e40af}
+.btn.s svg.i{width:15px;height:15px}
+.btn.p svg.i{color:#fff}
+.btn.d svg.i,.btn.idel svg.i{color:#b91c1c}
+.btn.d:hover,.btn.idel:hover{background:#fef2f2;border-color:#fca5a5}
+.btn.io{padding:4px 6px;gap:0}.btn.io.s{padding:3px 5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+td.act .btn{margin:0 1px}
+input.rsel,input.rselall{width:15px;height:15px;vertical-align:middle;margin:0;cursor:pointer}
+th.selc,td.selc{width:36px;min-width:36px!important;max-width:36px;padding:4px 0!important;text-align:center}
+th input.rselall{width:15px;height:15px;cursor:pointer;vertical-align:middle}
+tr.rowsel td{background:#e0ecff !important}
+#selBar{display:none;align-items:center;gap:6px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:4px 8px}
+#selBar.on{display:inline-flex}
+table.compact td{padding-top:2px;padding-bottom:2px} table.compact th{padding-top:4px;padding-bottom:4px}
+.rov{background:#f1f5f9;color:#334155}
+#mvDX.adj-wait,#adjDX.adj-wait{background:#f97316!important;border-color:#ea580c!important;color:#fff!important}#mvDX.adj-wait:hover,#adjDX.adj-wait:hover{background:#ea580c!important}
+#mvDX.adj-done,#adjDX.adj-done{background:#16a34a!important;border-color:#15803d!important;color:#fff!important}#mvDX.adj-done:hover,#adjDX.adj-done:hover{background:#15803d!important}
+.xlbar.ppbar{display:flex;gap:6px;align-items:center;justify-content:flex-end}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}input[type=number]{-moz-appearance:textfield;appearance:textfield}
+.uocin{width:130px;text-align:right;padding:2px 8px;height:26px;box-sizing:border-box;border:1px solid var(--line,#d1d5db);border-radius:6px;background:#fff;font:inherit}.uocin:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 2px #dbeafe}
+.uocv{display:inline-block;min-width:110px;text-align:right;color:#111827;font-weight:500;padding:0 6px 0 0}
+.flowv{display:flex;flex-direction:column;align-items:stretch;margin-top:4px}
+.ftier{border:1px dashed #cbd5e1;border-radius:12px;padding:8px 14px 14px}
+.fth{font-size:var(--fs-s);color:#64748b;margin-bottom:10px}
+.frow{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.fnode{flex:1 1 0;max-width:240px;min-width:150px;display:flex;align-items:center;justify-content:center;text-align:center;border:1px solid;border-radius:8px;padding:11px 12px;cursor:pointer;font-weight:600;font-size:var(--fs);transition:filter .15s}.fnode:hover{filter:brightness(.96)}
+.fnode.k-in{background:#E1F5EE;border-color:#5DCAA5;color:#085041}.fnode.k-pm{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
+.fnode[data-lid="calc"]{max-width:420px;flex-basis:420px}.fnode.st-bad{color:#b91c1c}.fnode.st-warn{color:#b45309}
+.lsw{display:inline-block;width:14px;height:14px;border-radius:3px;border:1px solid}.lsw.k-in{background:#E1F5EE;border-color:#5DCAA5}.lsw.k-pm{background:#EEEDFE;border-color:#AFA9EC}
+.fnt{display:flex;align-items:center;gap:7px;font-weight:600;font-size:var(--fs)}.fnk{font-size:var(--fs-s);color:#475569;margin-top:4px;line-height:1.35}
+.fic{flex:0 0 20px;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;font-style:normal}
+.fdown{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--pri);padding:4px 0}.fdown span{font-size:22px;line-height:1;font-weight:700}.fdown small{font-size:var(--fs-s);color:#64748b}
+.flg{display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-top:12px;font-size:var(--fs-s)}.flg span{display:inline-flex;align-items:center;gap:6px}
+.fban{border-radius:10px;padding:10px 14px;font-weight:600;margin-bottom:12px}.fban.ok{background:#dcfce7;color:#15803d}.fban.warn{background:#fef3c7;color:#92400e}.fban.bad{background:#fee2e2;color:#b91c1c}
+
+.kylbl{color:var(--pri);font-weight:600}
+#recalc,#recalc.p{background:#16a34a!important;border-color:#15803d!important;color:#fff!important}#recalc:hover{background:#15803d!important}
+#lockbtn{background:#fcd34d;border-color:#f59e0b;color:#78350f;font-weight:600}#lockbtn:hover{background:#fbbf24}
+.cbgh{font-size:var(--fs-card);font-weight:700;color:var(--bad,#b91c1c);margin:18px 0 8px}
+.edhide{display:none!important}
+.edbar{justify-content:flex-end;gap:8px;margin-top:12px}
+.box input:disabled,.box select:disabled,.box textarea:disabled{background:#f1f5f9;color:#334155;border-color:#e2e8f0;cursor:default;opacity:1}
+.kyrow .kyact{margin-left:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.xlbar.tools{display:flex}.xlbar .xsp{flex:1}
+.modal .in.tsm{max-width:740px;padding:14px 16px 16px;display:flex;flex-direction:column;overflow:hidden}
+.tsm .tsh{display:flex;align-items:center;gap:8px;margin-bottom:6px}.tsm .tsh h3{margin:0;flex:1;font-size:var(--fs-card)}.tsm .tsh svg.i{width:18px;height:18px;color:var(--txt)}
+.tsm .tsx{border:0;background:none;cursor:pointer;color:#6b7280;padding:4px;border-radius:6px;display:inline-flex}.tsm .tsx:hover{background:#f1f4f9;color:var(--txt)}.tsm .tsx svg{width:18px;height:18px}
+.tsm .tsd{font-size:var(--fs-s);color:var(--mut);margin:0 0 8px}
+.tsm .tslist{border:1px solid var(--line);border-radius:8px;overflow:auto;max-height:min(60vh,520px)}
+.tsm .tsr{display:flex;align-items:center;gap:10px;padding:5px 8px 5px 12px;border-bottom:1px solid var(--line)}.tsm .tsr:last-child{border-bottom:0}.tsm .tsr:hover{background:#f8fafc}
+.tsm .tsr label{flex:1;display:flex;align-items:center;gap:10px;cursor:pointer;min-width:0}.tsm .tsr label span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tsm .tsr input{width:16px;height:16px;accent-color:var(--pri);cursor:pointer}
+.tsm .tsr.off label span{color:var(--mut)}
+.tsm .mv{width:30px;height:28px;border:1px solid #d6dce6;border-radius:8px;background:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:#374151;padding:0}
+.tsm .mv:hover:not(:disabled){background:#f1f4f9}.tsm .mv:disabled{opacity:.35;cursor:default}.tsm .mv svg{width:16px;height:16px}
+.tsm .tsf{display:flex;align-items:center;gap:8px;margin-top:12px}.tsm .tsf .sp{flex:1}
+.tsm .tsf .btn{padding:6px 12px}
+.modal .in.afm{max-width:760px}
+.malink{color:#1d4ed8;text-decoration:underline;text-underline-offset:2px;font-weight:500}.malink:hover{color:#1e40af}
+.thekho tr.sub td{background:#f8fafc;font-style:italic}
+.rsbar .btn{padding:6px 10px;white-space:nowrap}
+.thekho tr.ctsum td{background:#f1f5f9;font-weight:600}.thekho tr.ctsum.ctsub td{background:#f8fafc;font-style:italic;font-weight:500}
+.afm .frm input[data-k]:disabled{background:#f1f5f9;color:#334155;border-color:#e2e8f0;cursor:default;opacity:1}
+.afm .frm{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px 16px;overflow:auto;max-height:66vh;padding:4px 2px 2px}
+@media(max-width:760px){.afm .frm{grid-template-columns:repeat(2,minmax(0,1fr))}} @media(max-width:480px){.afm .frm{grid-template-columns:1fr}}
+.afm .fld{margin:0;gap:5px}.afm .fld label{font-size:var(--fs-s);color:#4b5563}.afm .fld .rq{color:#dc2626;font-weight:600}
+.afm .fld input{width:100%;height:36px;border:1px solid #d6dce6;border-radius:8px;padding:6px 10px;font:inherit;background:#fff}
+.afm .fld input:focus{outline:none;border-color:#93b4f5;box-shadow:0 0 0 3px #dbe7ff}
+.afm .fld input.num{text-align:right}
+.afm .fld input.ro{background:#f3f5f9;border-style:dashed;color:#4b5563}
+.afm .tsh h3{font-size:var(--fs-card)}
+.kyin{width:96px;text-align:center}
+.tsetpop{width:300px}.tsetpop h4{margin:2px 0 6px}
+.tsetpop .tsl label{display:flex;gap:6px;align-items:center;padding:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tsetpop .tsl label.dis{color:var(--mut)}
+.pill{font-size:var(--fs-tag);padding:2px 8px;border-radius:20px;background:#eef2f7;color:var(--mut)}
+.pill.nfs{font-size:inherit}
+.hdtabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px}.hdtabs button{border:1px solid var(--line,#d6dbe4);background:#fff;border-radius:6px;padding:3px 10px;font:inherit;font-size:13px;cursor:pointer}.hdtabs button.act{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.pill.ok{background:#dcfce7;color:var(--ok)}.pill.warn{background:#fef3c7;color:var(--warn)}.pill.bad{background:#fee2e2;color:var(--bad)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.card .l{font-size:var(--fs-s);color:var(--mut);margin-bottom:4px}
+.card .v{font-family:var(--font-h);font-size:var(--fs-big);font-weight:600}
+.card .s{font-size:var(--fs-s);color:var(--mut);margin-top:2px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.box h3{margin:0 0 10px;font-size:var(--fs-card);font-weight:600}
+.modal .in h3{font-family:var(--font-h);font-weight:600;font-size:var(--fs-card);margin:0 0 10px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.bar .sp{flex:1}
+.tw{overflow:auto;max-height:70vh;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:var(--fs-t);background:#fff}
+th{position:sticky;top:0;background:linear-gradient(#2b4c8c,#1f3b70);color:#fff;z-index:2;text-align:center;vertical-align:middle;padding:6px 26px;border-right:1px solid #3d5c9a;border-bottom:1px solid #16305e;white-space:normal;word-break:keep-all;overflow-wrap:normal;line-height:1.25;font-weight:600;box-sizing:border-box}
+th.n{text-align:center} th.nw{white-space:nowrap} th.rs{padding:6px 20px}
+th{min-width:76px} th:not(.nw){min-width:110px} th.mut{color:#dbe4f5}
+th .xrs{position:absolute;right:-3px;top:0;width:7px;height:100%;cursor:col-resize;z-index:3}
+th .xrs:hover,th .xrs.on{background:rgba(253,230,138,.7)}
+table.xresizing{user-select:none;cursor:col-resize}
+th .xfb{display:inline-block;position:absolute;right:4px;top:50%;transform:translateY(-50%);border:1px solid #9db3dc;background:#fff;color:#1f3b70;border-radius:4px;font-size:9px;line-height:1;padding:3px 4px;cursor:pointer}
+th .xfb:hover{background:#dbe7ff}
+th.xf-act{background:linear-gradient(#b45309,#92400e)} th.xf-act .xfb{background:#fde68a;border-color:#f59e0b}
+td{padding:5px 8px;border-bottom:1px solid #dde3ec;border-right:1px solid #dde3ec;white-space:nowrap;vertical-align:middle;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+tbody tr:nth-child(even) td{background:#f7f9fc}
+tbody tr:nth-child(even) td.ed{background:#fff3b0}
+td:first-child,th:first-child{position:sticky;left:0;z-index:1;border-left:1px solid #dde3ec}
+td.fz{position:sticky;z-index:1;background:#fff;max-width:180px} tbody tr:nth-child(even) td.fz{background:#f7f9fc} th.fz{position:sticky;z-index:3} td.fzl,th.fzl{box-shadow:inset -2px 0 0 #8aa4cf} tr.tot td.fz{background:#e8efff} td.ed.fz{background:var(--yel) !important} tr.badrow td.fz{background:#fef2f2 !important}
+th:first-child{z-index:3}
+td:first-child{background:#fff} tbody tr:nth-child(even) td:first-child{background:#f7f9fc} td.ed:first-child{background:var(--yel)}
+td.n{text-align:right;font-variant-numeric:tabular-nums} th,th.n{text-align:center !important}
+td.act{white-space:nowrap;text-align:center}
+tr:hover td:not(.ed){background:#eef4ff !important}
+.xlbar{display:flex;gap:6px;align-items:center;margin:4px 0 2px}.xlbar:not(.on):not(.tools){display:none}
+.hscroll{overflow-x:auto;overflow-y:hidden;height:14px;margin-bottom:2px}.hscroll>div{height:1px}
+.xfsub{display:flex;justify-content:space-between;align-items:center;padding:6px 6px;margin:6px 0 2px;border-top:1px solid #e5e9f0;cursor:pointer;border-radius:6px}.xfsub:hover{background:#eef3fb}
+.xfitems{display:flex;flex-direction:column;padding:0 0 6px 18px;border-bottom:1px solid #e5e9f0;margin-bottom:6px}.xfitems a{color:#1f2937;text-decoration:none;padding:4px 6px;border-radius:5px}.xfitems a:hover{background:#eef3fb;color:#1d4ed8}
+.xfcur{display:flex;justify-content:space-between;gap:6px;padding:2px 6px 6px;color:#1d4ed8}.xfcur a{text-decoration:none;color:#b91c1c}
+.xfdlg{position:fixed;z-index:120;left:50%;top:30%;transform:translateX(-50%);background:#fff;border:1px solid #cbd3df;border-radius:10px;box-shadow:0 12px 32px rgba(15,23,42,.25);padding:12px 14px;width:340px;font-size:var(--fs-s)}
+.xfdlg .xfdh{font-weight:700;color:#1d4ed8;margin-bottom:4px}.xfdlg .xfdr{display:flex;gap:8px;align-items:center;margin-top:8px}.xfdlg select{flex:1.2;padding:5px}.xfdlg input[type=text],.xfdlg input[type=date],.xfdlg input[type=month]{flex:1;padding:5px;min-width:0}
+.xfpop{position:absolute;z-index:100;background:#fff;border:1px solid #cbd3df;border-radius:10px;box-shadow:0 8px 24px rgba(15,23,42,.18);padding:10px;width:290px;font-size:var(--fs-s)}
+.xfpop .xfrow{display:flex;gap:6px;align-items:center;margin:4px 0;flex-wrap:wrap}
+.xfpop .xfs{width:100%;margin:4px 0}
+.xflist{max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:4px 6px;margin:4px 0}
+.xflist label{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:1px 0}
+td.ed{background:var(--yel);cursor:text}
+td.ed:focus{outline:2px solid var(--pri);background:var(--yel)}
+tr.tot td{font-weight:600;background:#e8efff !important;border-top:2px solid #9db3dc}
+td.neg,.negv{color:var(--bad)!important}
+table.wrap td{white-space:normal;max-width:none;overflow:visible;line-height:1.4}
+td.xtra[data-x="Mua hàng chưa HĐ"],td[data-k="chuaHD"]{text-align:center;font-weight:700;color:#b45309}
+td.livePrev{background:#e0f2fe !important;color:#075985 !important;font-weight:600} td.liveBad{background:#fee2e2 !important;color:#991b1b !important}
+td.pwY{background:#fef3c7 !important;color:#92400e !important}
+td.pwR{background:#fee2e2 !important;color:#991b1b !important;font-weight:600}
+.mut{color:var(--mut)}
+.small{font-size:var(--fs-s)}
+.note{background:#eef6ff;border:1px solid #cfe1ff;border-radius:8px;padding:9px 12px;margin-bottom:12px;font-size:var(--fs-s)}
+tr.badrow td{background:#fef2f2 !important}tr.badrow td:first-child{box-shadow:inset 4px 0 0 #dc2626}
+.warnbox{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:9px 12px;margin-bottom:12px;font-size:var(--fs-s)}
+.err{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:9px 12px;margin-bottom:12px;font-size:var(--fs-s)}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:flex;align-items:center;justify-content:center;z-index:50}
+.modal .in{background:#fff;border-radius:12px;max-width:1100px;width:95%;max-height:90vh;overflow:auto;padding:16px 18px}
+.modal h3{margin:0 0 10px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.fld{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.fld label{font-size:var(--fs-s);color:var(--mut)}
+.busy{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:200;display:flex;align-items:center;justify-content:center;cursor:wait}
+.busy .in{background:#fff;border-radius:12px;padding:22px 30px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.3);min-width:340px}
+.busy .sp{width:34px;height:34px;border:4px solid #dbe4f5;border-top-color:var(--pri);border-radius:50%;margin:0 auto 12px;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.busy .st{font-size:var(--fs-s);color:var(--mut);margin-top:6px}
+.toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#111827;color:#fff;padding:16px 22px;border-radius:12px;font-size:var(--fs);z-index:60;opacity:.96;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:70vw;text-align:center;line-height:1.45}
+.kbd{font-family:Consolas,monospace;background:#eef2f7;padding:1px 5px;border-radius:4px;font-size:var(--fs-s)}
+ul.tight{margin:4px 0;padding-left:18px}
+ul.tight li{margin:2px 0}
+.tabs{display:flex;gap:6px;margin-bottom:12px;border-bottom:2px solid #dbe4f3;flex-wrap:wrap}
+.tabs button{border:0;background:none;padding:9px 16px;cursor:pointer;font:inherit;font-weight:600;color:#4c6ef5;border-bottom:3px solid transparent;margin-bottom:-2px;border-radius:8px 8px 0 0;display:inline-flex;align-items:center;gap:7px}
+.tabs button:hover{background:#f1f5ff}
+.tabs button.act{color:#c2410c;background:#fff1e6;border-bottom-color:#ea7a2a}
+.tabs button svg{width:16px;height:16px;flex:none}
+.drop{border:2px dashed #cbd3df;border-radius:10px;padding:22px;text-align:center;color:var(--mut);background:#fafbfd}
+.drop.over{border-color:var(--pri);background:var(--pri2)}
+.dz{border:1.5px dashed #cbd3df;border-radius:12px;padding:28px 16px;text-align:center;background:#fff;cursor:pointer;transition:.15s}
+.dz:hover,.dz.over{border-color:var(--pri);background:var(--pri2)}
+.dz .ic{font-size:24px;color:#9aa6b8;line-height:1}
+.dz .t{margin-top:8px;font-size:var(--fs)}.dz .t b{color:var(--pri)}
+.dz .s{margin-top:4px;font-size:var(--fs-s);color:var(--mut)}
+.tplcard{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-top:8px;cursor:pointer;background:#fff}
+.tplcard:hover{background:#f6f8fb}
+.tplcard b{display:block;font-size:var(--fs)}.tplcard span{font-size:var(--fs-s);color:var(--mut)}
+.tplcard .dl{font-size:20px;color:#6b7280}
+@media(max-width:800px){#app{flex-direction:column}nav{width:auto;display:flex;flex-wrap:wrap;gap:2px}nav h1{width:100%}nav .grp{width:100%}nav button{width:auto}}
+</style>
+</head>
+<body>
+<div id="app">
+<nav id="nav"><h1>Phần mềm Giá thành<small>Công ty Thiên Hồng</small></h1><button data-v="tongquan" class="top ">Tổng quan</button><button data-v="canhbao" class="top ">Cảnh báo &amp; kiểm tra</button><div class="grp"><i></i>1 · Dữ liệu nền</div><button data-v="d_items" class="">Danh mục hàng</button><button data-v="d_opening" class="">Số dư NXT đầu kỳ</button><button data-v="d_bom" class="">Định mức</button><button data-v="d_subs" class="">NVL thay thế</button><div class="grp"><i></i>2 · Phát sinh hằng ngày</div><button data-v="d_purchases" class="">Mua hàng &amp; Bán hàng</button><button data-v="d_issues" class="">Xuất dùng chung</button><button data-v="d_costs" class="">Chi phí 622/627</button><div class="grp"><i></i>3 · Kế hoạch &amp; giá thành</div><button data-v="luong" class="">Luồng xử lý</button><button data-v="kehoach" class="">Đề xuất sản xuất</button><button data-v="d_orders" class="">Lệnh sản xuất</button><button data-v="d_adjustments" class="">Cân đối NVL</button><button data-v="giathanh" class="">Giá thành</button><div class="grp"><i></i>4 · Báo cáo</div><button data-v="nxt" class="">Nhập – Xuất – Tồn</button><button data-v="banhang" class="">Tổng hợp bán hàng theo mặt hàng</button><button data-v="nam" class="">Tổng hợp năm</button><button data-v="xuatphieu" class="">File tải dữ liệu kế toán</button><div class="grp"><i></i>Hệ thống</div><button data-v="thietlap" class="">Thiết lập &amp; sao lưu</button><button data-v="huongdan" class="act">Hướng dẫn</button><div class="grp">Lưu trữ</div><div id="savebadge" style="padding:4px 10px;font-size:var(--fs-s);color:#9fb3d6">⏳ Đang lưu…<br><span style="color:#8ea4cc">Lưu trong trình duyệt máy này – nhớ Sao lưu định kỳ</span></div><div class="grp">Tính toán</div><div id="calcstat" style="padding:4px 10px;font-size:var(--fs-s);color:#9fb3d6"><span style="color:#fcd34d">⚠ Dữ liệu đã thay đổi – chưa tính</span><br>Chưa tính</div></nav>
+<main id="main"><div class="top"><h2>Cấu trúc nghiệp vụ &amp; hướng dẫn</h2></div><div class="kyrow"><div class="sel"><span class="kylbl">Năm <b>2026</b></span> · Xem: <select id="selM"><option value="ALL">Cả năm</option><option value="01">Tháng 1</option><option value="02">Tháng 2</option><option value="03">Tháng 3</option><option value="04">Tháng 4</option><option value="05">Tháng 5</option><option value="06">Tháng 6</option><option value="07">Tháng 7</option><option value="08">Tháng 8</option><option value="09">Tháng 9</option><option value="10" selected="">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option><option value="RANGE">Từ ngày – đến ngày</option></select></div></div><div class="toolbar" data-arr="1"><div class="tbl-right"></div></div><div class="box"><h3>Trình tự làm việc hằng tháng (làm theo thứ tự)</h3><ol class="small" style="margin:4px 0 0 18px;line-height:1.8">
+  <li><b>Chọn năm làm việc</b> ở Tổng quan (ô Năm). Ô "Xem" để xem tháng / cả năm / khoảng ngày.</li>
+  <li><b>Lần đầu dùng</b> (nhóm 1): Danh mục hàng (cột Nhóm hàng quyết định cách tính) → Số dư NXT đầu kỳ → Định mức → NVL thay thế nếu có → Lịch nghỉ / tăng ca (trong Thiết lập &amp; sao lưu) → Ngưỡng cảnh báo (trong Cảnh báo &amp; kiểm tra). Hoặc bấm <b>Nạp dữ liệu năm 2026</b>.</li>
+  <li><b>Đầu tháng</b>: nhập <b>ước tính điện + gas</b> của tháng ở Đề xuất sản xuất (tab 1) – phần mềm quy ra công suất sản xuất.</li>
+  <li><b>Nhập liệu</b> (nhóm 2): Mua hàng &amp; Bán hàng (Nhập Excel chế độ <i>Thay thế các kỳ có trong tệp</i>), Xuất dùng chung (gas… loại <i>Chi phí sản xuất (627)</i>; xuất cho bán hàng loại <i>641</i>), cuối tháng Chi phí 622/627.</li>
+  <li><b>▶ Tính giá thành</b> → chọn tháng → Tính. Phần mềm tự chạy: (1) <b>đề xuất sản xuất → đưa thẳng vào Lệnh sản xuất</b> cho các ngày chưa có lệnh, <b>chỉ đến ngày hôm nay</b> (ngày bấm Tính) – lần tính sau tự thêm các ngày mới; lệnh đề xuất có ngày SX sau hôm nay được bỏ để NXT không có tồn ảo, (2) tính giá thành bán thành phẩm → bánh gấu kem tươi → thành phẩm, (3) hoàn thiện NXT, (4) <b>đề xuất cân đối NVL</b> nếu tồn âm.</li>
+  <li><b>Xem lại &amp; sửa tay Lệnh sản xuất</b> (nhóm 3): sửa ô <i>Số lượng</i>, hoặc <i>Điều chỉnh TP (+/- thùng)</i> ở dòng thành phẩm (bán thành phẩm tự tính lại theo mẻ); thêm / xóa lệnh. Cột <i>Nguồn</i> cho biết lệnh do phần mềm đề xuất, đã sửa tay hay nhập tay.</li>
+  <li><b>NVL âm cuối tháng – bước 1: Chuyển ngày nhập kho</b> (menu Cân đối NVL → <i>📅 Chuyển ngày nhập kho</i>, hoặc nút trong bảng kết quả Tính giá thành): hàng thường về trước, hóa đơn về sau. Phần mềm tìm phiếu mua của các tháng sau và đề xuất đưa <i>Ngày nhập kho</i> về <b>ngày bắt đầu thiếu</b> trong tháng – phiếu lớn hơn số thiếu thì <b>tách</b> đúng phần thiếu (đơn vị đếm làm tròn lên số nguyên). Điều kiện: ngày hóa đơn <b>không quá 1 tháng</b> sau ngày nhập kho mới; âm nhiều (1 tháng chưa đủ) thì lấy thêm phiếu có hóa đơn <b>tối đa 2 tháng</b> (ghi chú màu cam). Tick chọn phiếu → Áp dụng; phần mềm chạy lần lượt từng tháng, ghi chú "Chuyển nhập kho…" vào dòng mua và đánh dấu cột <i>Mua hàng chưa HĐ</i>. Ngày hóa đơn giữ nguyên.</li>
+  <li><b>Bán thành phẩm âm nhỏ do làm tròn mẻ</b> (âm ≤ 1 mẻ, ví dụ bánh gấu khô −1,65 kg): Cân đối NVL tự đề xuất giảm tiêu hao bán thành phẩm ở lệnh công đoạn sau cuối tháng. Âm lớn hơn 1 mẻ là thiếu sản xuất thật → sửa Lệnh sản xuất, không cân đối.</li>
+  <li><b>Bước 2: Cân đối NVL</b> (chỉ cho phần còn âm sau khi đã chuyển ngày nhập kho) – 2 cách: (a) <b>áp dụng đề xuất</b> (nút <i>⚙ Cân đối theo đề xuất</i> trong bảng kết quả, hoặc <i>⚙ Cân đối theo đề xuất</i> ở menu Cân đối NVL); (b) <b>tự nhập tay</b> dòng cân đối (ngày SX + mã sản phẩm + mã VT, số âm = giảm).</li>
+  <li><b>Tính thử, không muốn giữ</b>: trong bảng kết quả bấm <b>↶ Không lưu</b> → Lệnh sản xuất, Cân đối NVL, Mua hàng (chuyển ngày nhập kho) trở về như trước khi bấm Tính (gồm cả các bước nối tiếp trong cùng bảng kết quả). Nút chỉ có khi bảng kết quả đang mở.</li>
+  <li><b>▶ Tính giá thành lại</b>: tháng đã chạy đề xuất thì phần mềm <b>giữ nguyên Lệnh sản xuất</b> (kể cả phần sửa tay), chỉ tính lại giá thành, NXT và đề xuất cân đối NVL. Lặp đến khi Cảnh báo sạch, tồn không âm. Muốn làm lại từ đầu: tick <i>Đề xuất lại từ đầu</i> khi Tính (hoặc nút ⟲ Đề xuất lại từ tháng này ở Lệnh sản xuất) – xóa toàn bộ Lệnh sản xuất và Cân đối NVL từ tháng đó trở về sau (kể cả lệnh tay, nhập Excel) rồi đề xuất lại các tháng này.</li>
+  <li><b>Xem kết quả</b>: Giá thành, NXT, Tổng hợp bán hàng theo mặt hàng, Tổng hợp năm, Cảnh báo &amp; kiểm tra.</li>
+  <li><b>🔒 Khóa kỳ</b> tháng đã xong; sao lưu .json tại Thiết lập. Tồn cuối tháng tự chuyển thành tồn đầu tháng sau.</li></ol></div>
+  <div class="box"><h3>Sản phẩm lỗi (hỏng trong định mức)</h3><div class="small" style="line-height:1.7"><b>Quy định kế toán (VAS 02 – Hàng tồn kho):</b> sản phẩm hỏng trong định mức / sản phẩm phụ thu hồi được tính theo <b>giá trị thuần có thể thực hiện được</b> (giá bán ước tính − chi phí bán ước tính) và <b>trừ khỏi giá thành</b> sản phẩm chính. Hạch toán: <b>Nợ 155</b> (sản phẩm lỗi) / <b>Có 154</b>. Phần thiệt hại còn lại nằm trong giá thành sản phẩm đạt.</div>
+  <div class="small" style="margin-top:6px"><b>Cách phần mềm tính:</b></div><ul class="tight small">
+   <li>Mỗi lệnh của sản phẩm chính: <b>SL lỗi = SL thực hiện × tỷ lệ lỗi</b>; <b>SL đạt = SL thực hiện − SL lỗi</b>.</li>
+   <li><b>Giá trị thu hồi = SL lỗi × giá bán ước tính</b> → nhập kho mã sản phẩm lỗi với đúng giá trị này.</li>
+   <li><b>Giá thành nhập kho sản phẩm đạt = 154 − giá trị thu hồi</b>; đơn giá xuất cho công đoạn sau = Σ(154 − thu hồi) ÷ Σ SL đạt của tháng.</li>
+   <li>Bán sản phẩm lỗi: giá vốn = giá trị thu hồi bình quân; lãi / lỗ chỉ là phần chênh giữa giá bán thực tế và giá ước tính.</li>
+   <li>Đề xuất sản xuất tự bù hao hụt: <b>SL cần sản xuất = SL cần dùng ÷ (1 − tỷ lệ lỗi)</b>, rồi làm tròn mẻ.</li>
+   <li>File kế toán: phiếu nhập kho có thêm dòng nhập sản phẩm lỗi (TK Nợ = kho sản phẩm lỗi, TK Có = 154).</li></ul>
+  <div class="small" style="margin-top:6px"><b>Lệnh sản xuất đã có trước khi tính hao hụt</b> (Thiết lập &amp; sao lưu → tab Sản phẩm lỗi): Các lệnh của sản phẩm chính trong kỳ áp dụng được lập khi <b>chưa tính phần lỗi</b> → chỉ phần đạt (1 − tỷ lệ lỗi) dùng được nên tồn sản phẩm chính bị âm. Dùng nút dưới đây để <b>tăng lệnh</b> sao cho SL đạt lũy kế bằng SL lệnh gốc (làm tròn mẻ); SL gốc được lưu lại để <b>hoàn tác</b>. Tháng đã khóa không bị sửa. Lưu ý: làm thêm thì dùng thêm NVL – nếu chứng từ mua không đủ, NVL sẽ âm.</div></div>
+  <div class="box"><h3>Sang năm mới &amp; mở sổ lại</h3><ul class="small" style="margin:4px 0 0 18px;line-height:1.8">
+  <li>Không cần thao tác khóa sổ: tồn cuối tháng 12 tự động thành tồn đầu tháng 1 năm sau. Tiếp tục nhập mua hàng, lệnh SX, bán hàng của năm mới và chọn kỳ tương ứng để xem báo cáo.</li>
+  <li>Sau kiểm kê muốn <b>mở sổ lại</b> từ một kỳ (lấy số kiểm kê làm tồn đầu): đổi <b>Kỳ bắt đầu</b> (Số dư NXT đầu kỳ hoặc Thiết lập &amp; sao lưu) rồi nhập lại Số dư NXT đầu kỳ. Dữ liệu các kỳ trước vẫn giữ nhưng không còn ảnh hưởng số dư.</li>
+  <li><b>Khóa kỳ</b> tháng đã chốt ở Tổng quan (nút 🔒 Khóa kỳ).</li></ul></div>
+  <div class="box"><h3>Màn hình Chi phí 622 / 627 – ý nghĩa các cột</h3><ul class="small" style="margin:4px 0 0 18px;line-height:1.8">
+  <li><b>kg SX</b> = kg bánh gấu kem tươi sản xuất trong tháng (dùng cho cột 622 đ/kg SX, 627 đ/kg SX).</li>
+  <li><b>Tổng giá thành 154</b> = 621 (NVL mua + bao bì) + 622 + 627.</li>
+  <li><b>Thu hồi SP lỗi</b> = giá trị bánh lỗi nhập kho theo giá bán ước tính, trừ khỏi giá thành sản phẩm đạt (Thiết lập &amp; sao lưu → tab Sản phẩm lỗi).</li>
+  <li><b>641</b> = Xuất dùng chung loại Bán hàng (641) – chỉ trừ kho, không tính vào giá thành. Xuất dùng chung loại Chi phí sản xuất (627) cộng vào 627 của tháng và được phân bổ vào giá thành.</li>
+  <li><b>Chưa phân bổ</b> = chi phí của tháng không có lệnh sản xuất để nhận.</li>
+  <li><b>Quy tắc phân bổ 622 / 627</b> cho công đoạn 1 và công đoạn 2 đặt ở <b>Thiết lập &amp; sao lưu → tab Phân bổ 622/627</b>.</li></ul></div>
+  <div class="box"><h3>Màn hình Nhập – Xuất – Tồn – cách tính</h3><ul class="small" style="margin:4px 0 0 18px;line-height:1.8">
+  <li><b>Đơn giá bình quân</b> = (giá trị tồn đầu kỳ + giá trị nhập trong kỳ) ÷ (số lượng tồn đầu kỳ + số lượng nhập trong kỳ).</li>
+  <li><b>BQ/ngày</b> = số lượng phát sinh ÷ số ngày làm việc (Thứ 2 – Thứ 7) từ đầu tháng đến ngày phát sinh cuối.</li></ul></div>
+  <div class="box" id="hdCanDoi"><h3>Cân đối NVL – các ý cần biết</h3><ul class="small" style="margin:4px 0 0 18px;line-height:1.8">
+  <li><b>Cân đối là gì</b>: điều chỉnh số lượng xuất theo định mức của <b>một lệnh</b> (Ngày SX + Mã sản phẩm + Mã VT). Số <b>âm</b> = giảm tiêu hao, số <b>dương</b> = tăng. Ảnh hưởng: 621 và giá thành của lệnh đó, cột Xuất của NXT, số lượng trên phiếu XK của File kế toán.</li>
+  <li><b>Thứ tự xử lý NVL âm cuối tháng</b>: <b>(1) 📅 Chuyển ngày nhập kho</b> trước (hàng về trước, hóa đơn về sau) → <b>(2) ⚙ Cân đối</b> chỉ cho phần còn âm. Bấm Cân đối khi còn phiếu có thể chuyển ngày, phần mềm sẽ nhắc. Không muốn chuyển ngày: trong bảng kết quả Tính giá thành bấm <i>Bỏ qua – cân đối luôn</i> – đề xuất cân đối bù <b>toàn bộ</b> phần âm (phiếu không chuyển thì phần âm đó được cân đối).</li>
+  <li><b>Chuyển ngày nhập kho</b>: lấy phiếu mua các tháng sau, đưa Ngày nhập kho về ngày bắt đầu thiếu; ngày hóa đơn không quá <b>1 tháng</b>, âm nhiều thì tối đa <b>2 tháng</b> (ghi chú cam). Phiếu lớn hơn số thiếu thì <b>tách</b> đúng phần thiếu. Cột <i>Mua hàng chưa HĐ</i>: dòng tách <b>x - Số HĐ</b>, dòng còn lại của hóa đơn <b>Số HĐ</b>, chuyển cả phiếu <b>x</b>. Ngày hóa đơn giữ nguyên.</li>
+  <li><b>Đã chuyển ngày nhập kho, sau đó không muốn chuyển nữa</b> – nút <b>↩ Bỏ chuyển kho (n)</b>, n = số phiếu đã chuyển; chỉ hiện khi tháng đang xem có phiếu đã chuyển. Nút ở <b>bảng kết quả Tính giá thành</b> (bấm xong tự tính lại) và <b>menu Cân đối NVL</b> cạnh nút 📅.<br>
+  Bảng hiện Mã, Hóa đơn, Nhà cung cấp, SL, Ngày nhập hiện tại → Ngày trả về, Cách làm; tick phiếu muốn bỏ → <b>Bỏ chuyển kho … dòng</b>:<br>
+  &nbsp;&nbsp;• Phiếu <b>chuyển nguyên</b>: trả về ngày nhập gốc, xóa ghi chú "Chuyển nhập kho…", cột <i>Mua hàng chưa HĐ</i> trống lại.<br>
+  &nbsp;&nbsp;• Phiếu <b>bị tách</b>: gộp lại vào dòng gốc, cộng lại SL và thành tiền như ban đầu.<br>
+  Sau đó Tính giá thành lại: NVL âm trở lại → bấm <b>Bỏ qua – cân đối luôn</b> để cân đối hết phần âm. Nếu bảng kết quả Tính giá thành vừa chuyển còn mở, bấm <b>↶ Không lưu</b> cũng trả về như cũ. Tháng đã 🔒 khóa không bỏ chuyển được; dòng cân đối làm sau khi chuyển nên xem lại ở Cân đối NVL.</li>
+  <li><b>Đề xuất cân đối</b>: phần mềm đi theo ngày trong tháng, giảm tiêu hao ở các lệnh làm tồn xuống âm, đến khi tồn cuối tháng về 0. Dòng ghi nguồn <b>PM</b> kèm lý do.</li>
+  <li><b>Bán thành phẩm</b> âm <b>≤ 1 mẻ</b> (làm tròn mẻ, vd bánh gấu khô −1,65 kg): đề xuất giảm tiêu hao ở lệnh công đoạn sau cuối tháng. Âm <b>&gt; 1 mẻ</b> là thiếu sản xuất → sửa Lệnh sản xuất. <b>Thành phẩm âm không cân đối</b> → tăng Số lượng lệnh thành phẩm hoặc Đề xuất lại lệnh sản xuất.</li>
+  <li><b>Bảng đề xuất</b> (bấm ⚙ Cân đối theo đề xuất hoặc nút trong bảng kết quả Tính giá thành): xem Tồn cuối, SL cân đối, Đang xuất → Sau cân đối, Nguyên nhân; tick <b>từng dòng</b> rồi Áp dụng. Áp dụng lần lượt từng tháng – tháng sau có thể cần ít hơn số đang hiện.</li>
+  <li><b>Tab Tổng hợp CĐ theo mặt hàng</b>: gộp các dòng cân đối của kỳ đang xem theo mã VT – Số dòng CĐ, SL giảm / tăng, SL cân đối, Giá trị CĐ. Bấm mã VT → mở Nhập – Xuất – Tồn của mã đó (đổi kỳ xem: tháng, quý, cả năm, từ ngày – đến ngày).</li>
+  <li><b>Màu nút</b>: cam "n tháng chờ" = còn việc; xanh "✓ Đã …" = xong.</li>
+  <li><b>Tháng chưa kết thúc</b> (vd đang giữa tháng 11): không chuyển ngày / không cân đối – NVL âm do chưa nhập đủ phiếu mua. Cuối tháng nhập đủ Mua hàng, Chi phí 622/627 rồi Tính lại.</li>
+  <li><b>Các cột</b>: <i>Lệnh SX</i> báo <b>⚠ không có lệnh</b> nếu Ngày SX + Mã sản phẩm không khớp lệnh nào → dòng đó không có tác dụng (nhập tay phải chọn đúng ngày có lệnh). <i>Đơn giá</i> = giá xuất bình quân của tháng mà lệnh đó dùng; <i>Giá trị</i> = SL cân đối × Đơn giá; dòng Tổng cộng SL và giá trị.</li>
+  <li><b>Lưu ý</b>: "Đề xuất lại từ đầu" xóa các dòng cân đối từ tháng đó trở về sau (kể cả dòng tay) – sao lưu trước. Kỳ đã 🔒 khóa không thêm / sửa cân đối được.</li></ul></div>
+  <div class="box"><h3>Sơ đồ sản xuất &amp; tính giá thành (theo file Gia thanh - 26 TH)</h3><div class="small" style="line-height:1.7">
+  <b>Cấp 1 – Bán thành phẩm theo mẻ</b>: Bánh khô (BTP_BGK) và Kem tươi (BTP_KT), mẻ 100 kg. NVL xuất = Số mẻ thực hiện × SL NVL/lần làm (+ cân đối).<br>
+  <b>Cấp 2 – Bánh gấu kem tươi</b> (BTP_BGKT, nhóm "Thành phẩm"): 1 kg = 0,6 kg bánh khô + 0,4 kg kem tươi; SL xuất = ROUND(SL × (1 + hao hụt) × định mức, 1).<br>
+  <b>Cấp 3 – Thành phẩm đóng gói</b> (TP_BKG 5 kg, TP_BKG_150G, TP_BKG_400G): bánh gấu kem tươi (không làm tròn) + túi, thùng (làm tròn 1 số lẻ).<br>
+  Phần mềm tự xác định cấp theo định mức nên đổi mã / thêm sản phẩm cùng cấu trúc vẫn tính được.</div></div>
+  <div class="box"><h3>Công thức áp dụng (khớp file Excel)</h3><ul class="tight small">
+  <li><b>Giá BQ NVL mua</b> (sheet Tồn kho tháng cột P) = (Tồn đầu tiền + Tiền mua trong tháng) ÷ (Tồn đầu SL + SL mua) – dùng làm đơn giá NVL, bao bì, gas xuất trong tháng.</li>
+  <li><b>Đơn giá bán thành phẩm / bánh gấu kem tươi</b> khi xuất cho công đoạn sau = Tổng 154 của sản phẩm đó trong tháng ÷ Tổng SL sản xuất trong tháng.</li>
+  <li><b>621</b> = Tổng số lượng xuất × Đơn giá. <b>627</b> tháng = 6273 + 6274 + Điện + Nước + Xuất dùng chung loại Chi phí sản xuất (627). Xuất dùng chung loại Bán hàng (641) chỉ trừ kho, không vào giá thành.</li>
+  <li><b>Phân bổ</b>: CĐ1 nhận 622 × tỷ lệ tổng CĐ1 (mặc định 80%) và 627 × 100%, chia Bánh khô / Kem tươi / BGKT theo tỷ lệ SP trong CĐ (622: 25/25/50%, 627: 60/20/20%), trong từng sản phẩm chia theo tỷ trọng 621 của lệnh. CĐ2 (thành phẩm đóng gói) nhận phần còn lại (622 × 20%) chia theo tỷ trọng 621 trong tháng.</li>
+  <li><b>154</b> = 621 + 622 + 627; Giá vốn/đv của lệnh = (154 − thu hồi sản phẩm lỗi) ÷ SL đạt.</li>
+  <li><b>Sản phẩm lỗi (bánh gấu khô dẹp)</b> – hỏng trong định mức, theo VAS 02: SL lỗi = SL thực hiện × tỷ lệ lỗi (BTP_BGK 7%, 8.000 đ/Kg từ 11/2026); <b>giá trị thu hồi = SL lỗi × giá bán ước tính</b> → nhập kho mã sản phẩm lỗi (Nợ 155 / Có 154) và <b>trừ khỏi giá thành sản phẩm đạt</b>. SL đạt = SL thực hiện − SL lỗi; đơn giá xuất cho công đoạn sau = Σ(154 − thu hồi) ÷ Σ SL đạt. Đề xuất SX tự tăng sản lượng để bù: cần SX = cần dùng ÷ (1 − tỷ lệ lỗi).</li>
+  <li><b>Giá vốn BQ tháng</b> (NXT) = (Tồn đầu tiền + Nhập tiền) ÷ (Tồn đầu SL + Nhập SL); Xuất tiền = Xuất SL × Giá vốn BQ; giá vốn hàng bán theo giá vốn BQ của tháng bán.</li>
+  <li><b>BQ/ngày</b> = phát sinh tháng ÷ số ngày Thứ 2–Thứ 7 từ đầu tháng đến ngày phát sinh cuối; <b>Số ngày còn dùng</b> = Tồn cuối ÷ BQ/ngày; <b>NVL cần lấy đủ 15 ngày</b> = BQ × 15 − tồn cuối.</li>
+  <li>Đã đối chiếu với file Excel: 10 tháng năm 2026, 1.172 lệnh – NXT, 621, 622, 627, 154 từng lệnh khớp (chênh lệch &lt; 0,5 đồng).</li></ul></div>
+  <div class="box"><h3>Đề xuất sản xuất – theo công suất năng lượng (điện + gas)</h3><ul class="tight small">
+  <li><b>Đầu tháng</b> nhập <i>ước tính điện + gas</i> của tháng (Đề xuất sản xuất → Thông số đề xuất). Khi đã nhập <i>tiền điện thực tế</i> ở Chi phí 622/627, phần mềm tự dùng số thực tế = điện + gas (Xuất dùng chung loại 627).</li>
+  <li><b>SL bánh gấu kem tươi (ước tính) SX</b> = Tổng năng lượng ÷ <b>Năng lượng/kg BGKT (đ)</b> (nhập tay ở Thông số đề xuất; để trống thì phần mềm gợi ý = bình quân 3 tháng gần nhất có đủ điện + gas). <b>SX/ngày</b> = số trên ÷ số ngày làm việc (trừ Chủ nhật, ngày ở Lịch nghỉ / tăng ca; Chủ nhật tăng ca được tính).</li>
+  <li><b>Mốc khóa</b> = ngày sản xuất muộn nhất đã có Lệnh sản xuất: từ đầu năm đến ngày này phần mềm lấy đúng theo Lệnh SX, chỉ đề xuất cho các ngày sau mốc.</li>
+  <li><b>Chia cho từng loại thùng mỗi ngày</b>: trước hết đủ bán trong ngày + tồn an toàn (mặc định 1 ngày bán); phần công suất còn lại làm thêm cho loại <b>còn ít ngày tồn nhất</b> (ngày tồn = tồn ÷ bình quân bán 30 ngày), đến khi đạt <b>tồn tối đa</b> (mặc định 15 ngày bán).</li>
+  <li>Nếu mọi loại đã đủ tồn tối đa: <b>giảm sản lượng ngày đó tối đa 15%</b> (chỉnh được); dưới mức đó vẫn làm, ưu tiên loại ít ngày tồn nhất. Nếu số cần bán vượt công suất: vẫn làm đủ bán và cảnh báo VƯỢT CÔNG SUẤT.</li>
+  <li><b>Ngày bán cuối</b> = ngày bán hàng muộn nhất đã nhập: sau ngày này số bán dùng <b>bình quân bán</b> (in nghiêng). Mọi đề xuất chỉ trong tháng đang tính.</li>
+  <li>Bánh gấu kem tươi = số thùng × kg/thùng − tồn; bánh khô = 0,6 ×, kem tươi = 0,4 × bánh gấu kem tươi − tồn, làm tròn lên mẻ 100 kg (trước kỳ nghỉ làm đúng số cần).</li>
+  <li><b>Cuối tháng</b> có tiền điện + gas thực tế: ▶ Tính giá thành với tick <i>Đề xuất lại từ đầu</i> để đề xuất lại nguyên tháng (và các tháng sau) theo số thực tế.</li>
+  <li>Cảnh báo: CHỦ NHẬT / NGHỈ, VƯỢT CÔNG SUẤT, GIẢM x% CÔNG SUẤT, CHƯA CÓ ƯỚC TÍNH ĐIỆN + GAS, BGKT CHƯA ĐÓNG GÓI QUÁ 1 NGÀY, BTP QUA KỲ NGHỈ, THIẾU …, THIẾU NVL (NVL dùng trong ngày mà tồn đầu + mua đến ngày không đủ).</li></ul></div>
+  <div class="box"><h3>Ngưỡng cảnh báo – cách đặt</h3><div class="small" style="line-height:1.7">(Cảnh báo &amp; kiểm tra → tab Ngưỡng cảnh báo – bấm <b>Sửa</b> để thay đổi, <b>Lưu ngưỡng</b> để lưu.)</div><ul class="small" style="margin:4px 0 0 18px;line-height:1.8">
+  <li><b>Ngưỡng tồn kho</b>: Ngưỡng theo <b>số ngày còn dùng</b> = tồn cuối ÷ bình quân/ngày. Tồn <b>trên mốc Rủi ro</b> → Phân loại <b>Rủi ro cao</b>; trên <b>một nửa</b> mốc đó → <b>Cảnh báo</b>; dưới Tồn tối thiểu → <i>Tồn thấp - cần mua</i>. Âm kho và NVL chưa có trong Định mức / NVL thay thế / Xuất dùng chung luôn là Rủi ro cao. Dòng theo mã (ví dụ <b>TRUNG_GA (Ngày)</b>) ưu tiên hơn dòng theo nhóm. Tên nhóm: <i>TP đóng gói (Ngày)</i>, <i>Bán thành phẩm</i>, <i>Thành phẩm</i>, <i>NVL Bánh khô</i>, <i>NVL Kem tươi</i>, <i>Bao bì</i>, <i>Nhiên liệu</i>. Thông số đề xuất sản xuất chỉnh ở <b>Đề xuất sản xuất</b>; quy tắc phân bổ 622/627 ở <b>Thiết lập &amp; sao lưu → Phân bổ 622/627</b>.</li>
+  <li><b>Ngưỡng % công suất</b> (menu Đề xuất sản xuất, cột % công suất): ô tô <b>đỏ</b> khi vượt ngưỡng trên (mặc định 100% – làm nhiều hơn mức năng lượng cho phép, thường do ước tính điện + gas thấp hoặc Năng lượng/kg sai), tô <b>vàng</b> khi dưới ngưỡng dưới (mặc định 70% – còn dư nhiều năng lượng).</li>
+  <li><b>Ngưỡng chênh lệch giá mua / bán (%)</b>: Giá mua so với giá BQ tháng trước (chưa có thì so với giá giữa trong tháng). Giá bán so với giá bán phổ biến trong tháng. Bán dưới giá vốn luôn cảnh báo đỏ.</li></ul></div>
+  <div class="box"><h3>Trạng thái rủi ro – ý nghĩa &amp; cách xử lý</h3>
+  <div class="small" style="margin-bottom:6px"><b>Cột Trạng thái rủi ro &amp; Phân loại</b> (báo cáo Nhập – Xuất – Tồn): mỗi mã hiện <b>1 trạng thái</b> – mức nặng nhất, theo thứ tự ưu tiên dưới đây. Số ngày còn dùng = tồn cuối ÷ lượng dùng bình quân/ngày trong tháng.</div>
+  <div class="xlbar"><span class="small mut" data-xn="" style="display:none"></span><button class="btn s" data-xc="" style="display:none">✕ Xóa lọc / sắp xếp</button></div><div class="hscroll" style="display: none;"><div style="width: 1128px;"></div></div><div class="tw" style="max-height:none"><table class="small wrap" data-xl="1" data-tkey="huongdan|Trạng thái ghi trong NXT|Khi nào|Phân loại|Cách xử lý" data-defcols="[&quot;Trạng thái ghi trong NXT&quot;,&quot;Khi nào&quot;,&quot;Phân loại&quot;,&quot;Cách xử lý&quot;]"><thead><tr><th data-lbl="Trạng thái ghi trong NXT">Trạng thái ghi trong NXT<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Khi nào" class="nw" data-nw="1">Khi nào<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Phân loại" class="nw" data-nw="1">Phân loại<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Cách xử lý" class="nw" data-nw="1">Cách xử lý<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th></tr></thead><tbody>
+  <tr><td>Âm kho - xử lý ngay</td><td>Tồn cuối &lt; 0 (mọi loại hàng)</td><td><span class="pill bad nfs">Rủi ro cao</span></td><td>Kiểm tra thiếu phiếu mua / nhập kho, lệnh sản xuất; NVL dùng ít hơn định mức → Cân đối NVL.</td></tr>
+  <tr><td>Chưa xây dựng định mức</td><td>NVL / vật tư không có trong Định mức, NVL thay thế, Xuất dùng chung</td><td><span class="pill bad nfs">Rủi ro cao</span></td><td>Khai báo định mức / NVL thay thế, hoặc ghi Xuất dùng chung nếu là vật tư dùng chung.</td></tr>
+  <tr><td>Tồn sử dụng trên … / Tồn trên … / Tồn thấp …</td><td>Theo mốc của từng nhóm / mã – xem bảng chi tiết ngay dưới</td><td><span class="pill bad nfs">Rủi ro cao</span> / <span class="pill warn nfs">Cảnh báo</span></td><td>Xem bảng dưới.</td></tr>
+  <tr><td><i>(trống)</i></td><td>Không có vấn đề</td><td><span class="pill ok nfs">OK</span></td><td>–</td></tr></tbody></table></div>
+  <div class="small" style="margin:10px 0 6px"><b>Trạng thái theo mốc tồn của từng nhóm / mã</b> (đúng chữ hiện trong cột Trạng thái rủi ro; mốc sửa ở Cảnh báo &amp; kiểm tra → tab Ngưỡng cảnh báo):</div>
+  <div class="xlbar tools"><span class="small mut" data-xn="" style="display:none"></span><button class="btn s" data-xc="" style="display:none">✕ Xóa lọc / sắp xếp</button><span class="xsp"></span><button class="btn s io" data-ic="sliders" data-tset="" title="Thiết lập bảng: ẩn/hiện cột, mật độ dòng" aria-label="Thiết lập bảng"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"></path></svg></button><button class="btn s io" data-ic="xout" data-txl="" title="Xuất Excel bảng này (đúng các dòng, cột đang hiển thị)" aria-label="Xuất Excel bảng này"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"></path><path d="M13 3l6 6v3"></path><path d="M13 3v6h6"></path><path d="M14 17h7m-3-3 3 3-3 3"></path></svg></button></div><div class="hscroll" style="display: none;"><div style="width: 1128px;"></div></div><div class="tw" style="max-height:none"><table class="small wrap" data-xl="1" data-tkey="huongdan|Nhóm / Mã|Rủi ro cao – khi tồn trên mốc|Cảnh báo – khi tồn trên một nửa mốc|Tồn thấp" data-defcols="[&quot;Nhóm / Mã&quot;,&quot;Rủi ro cao – khi tồn trên mốc&quot;,&quot;Cảnh báo – khi tồn trên một nửa mốc&quot;,&quot;Tồn thấp&quot;]"><thead><tr><th data-lbl="Nhóm / Mã" class="nw" data-nw="1">Nhóm / Mã<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Rủi ro cao – khi tồn trên mốc">Rủi ro cao – khi tồn trên mốc<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Cảnh báo – khi tồn trên một nửa mốc">Cảnh báo – khi tồn trên một nửa mốc<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Tồn thấp" class="nw" data-nw="1">Tồn thấp<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th></tr></thead><tbody>
+  <tr><td><b>TP đóng gói (Ngày)</b><br><span class="mut">Theo số ngày bán bình quân; chỉnh theo HSD in trên bao bì</span></td><td>Tồn trên 6 tháng - rủi ro tồn lâu (lưu ý hạn dùng)</td><td>Tồn trên 3 tháng - ưu tiên bán / dùng trước</td><td>–</td></tr><tr><td><b>Sản phẩm lỗi</b><br><span class="mut">Bánh lỗi bán giá thấp – rủi ro trên 1 tháng</span></td><td>Tồn sử dụng trên 1 tháng - không mua thêm (NVL quá dư)</td><td>Tồn sử dụng trên 15 ngày - SX thêm TP (hạn chế mua)</td><td>–</td></tr><tr><td><b>Bán thành phẩm</b><br><span class="mut">Hạn dùng rất ngắn – tồn qua đêm phải có biên bản hủy/hao hụt</span></td><td>Tồn trên 2 ngày - rủi ro tồn lâu (lưu ý hạn dùng)</td><td>Tồn trên 1 ngày - ưu tiên bán / dùng trước</td><td>–</td></tr><tr><td><b>Thành phẩm</b><br><span class="mut">Bánh gấu kem tươi trước đóng gói – đóng gói chậm nhất 1 ngày</span></td><td>Tồn trên 2 ngày - rủi ro tồn lâu (lưu ý hạn dùng)</td><td>Tồn trên 1 ngày - ưu tiên bán / dùng trước</td><td>–</td></tr><tr><td><b>NVL Bánh khô</b><br><span class="mut">Bột, bơ, phụ gia… kiểm tra HSD lô nhập</span></td><td>Tồn sử dụng trên 3 tháng - không mua thêm (NVL quá dư)</td><td>Tồn sử dụng trên 45 ngày - SX thêm TP (hạn chế mua)</td><td>Dưới 5 ngày: Tồn thấp - cần mua</td></tr><tr><td><b>NVL Kem tươi</b><br><span class="mut">Sữa bột, chất béo sữa, đường, dầu… bảo quản lạnh/khô</span></td><td>Tồn sử dụng trên 3 tháng - không mua thêm (NVL quá dư)</td><td>Tồn sử dụng trên 45 ngày - SX thêm TP (hạn chế mua)</td><td>Dưới 5 ngày: Tồn thấp - cần mua</td></tr><tr><td><b>Bao bì</b><br><span class="mut">Túi, thùng carton</span></td><td>Tồn sử dụng trên 1 năm - không mua thêm (NVL quá dư)</td><td>Tồn sử dụng trên 6 tháng - SX thêm TP (hạn chế mua)</td><td>–</td></tr><tr><td><b>Nhiên liệu</b><br><span class="mut">Gas</span></td><td>Tồn sử dụng trên 1 tháng - không mua thêm (NVL quá dư)</td><td>Tồn sử dụng trên 15 ngày - SX thêm TP (hạn chế mua)</td><td>–</td></tr><tr><td><b>TRUNG_GA (Ngày)</b><br><span class="mut">Ngưỡng riêng theo mã (ưu tiên hơn ngưỡng nhóm)</span></td><td>Tồn sử dụng trên 10 ngày - không mua thêm (NVL quá dư)</td><td>Tồn sử dụng trên 5 ngày - SX thêm TP (hạn chế mua)</td><td>Dưới 3 ngày: Tồn thấp - cần mua</td></tr>
+  </tbody></table></div>
+  <div class="small mut" style="margin-top:4px">Nhóm "NVL Bánh khô" / "NVL Kem tươi" là <b>nguyên vật liệu</b> dùng làm bánh khô / kem tươi (bột, trứng, bơ, đường…); bản thân bánh khô, kem tươi (bán thành phẩm) thuộc nhóm "Bán thành phẩm". Bán dưới giá vốn được báo ở mục Đơn giá mua / bán bất thường và chỉ tiêu theo tháng.</div>
+  <div class="small" style="margin:10px 0 6px"><b>3. Chỉ tiêu đánh giá rủi ro theo tháng</b> (Cảnh báo &amp; kiểm tra – ô <span style="background:#fef3c7;padding:0 4px">vàng</span> = cảnh báo, ô <span style="background:#fee2e2;padding:0 4px">đỏ</span> = rủi ro cao):</div>
+  <div class="xlbar tools"><span class="small mut" data-xn="" style="display:none"></span><button class="btn s" data-xc="" style="display:none">✕ Xóa lọc / sắp xếp</button><span class="xsp"></span><button class="btn s io" data-ic="sliders" data-tset="" title="Thiết lập bảng: ẩn/hiện cột, mật độ dòng" aria-label="Thiết lập bảng"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"></path></svg></button><button class="btn s io" data-ic="xout" data-txl="" title="Xuất Excel bảng này (đúng các dòng, cột đang hiển thị)" aria-label="Xuất Excel bảng này"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"></path><path d="M13 3l6 6v3"></path><path d="M13 3v6h6"></path><path d="M14 17h7m-3-3 3 3-3 3"></path></svg></button></div><div class="hscroll" style="display: none;"><div style="width: 1128px;"></div></div><div class="tw" style="max-height:none"><table class="small wrap" data-xl="1" data-tkey="huongdan|Chỉ tiêu|Vàng từ|Đỏ từ|Ý nghĩa / xử lý" data-defcols="[&quot;Chỉ tiêu&quot;,&quot;Vàng từ&quot;,&quot;Đỏ từ&quot;,&quot;Ý nghĩa / xử lý&quot;]"><thead><tr><th data-lbl="Chỉ tiêu" class="nw" data-nw="1">Chỉ tiêu<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Vàng từ" class="nw" data-nw="1">Vàng từ<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Đỏ từ" class="nw" data-nw="1">Đỏ từ<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th><th data-lbl="Ý nghĩa / xử lý" class="nw" data-nw="1">Ý nghĩa / xử lý<button class="xfb" title="Lọc / sắp xếp cột">▼</button><div class="xrs" title="Kéo để đổi độ rộng cột"></div></th></tr></thead><tbody>
+  <tr><td>Tỷ lệ SL nhập kho / SL bán (thùng)</td><td>115%</td><td>130%</td><td>Sản xuất nhiều hơn bán → tồn tăng; giảm sản lượng hoặc đẩy bán.</td></tr>
+  <tr><td>Số ngày tồn thành phẩm</td><td>45</td><td>60</td><td>Tồn thành phẩm đủ bán quá lâu → rủi ro hạn dùng.</td></tr>
+  <tr><td>Chi phí năng lượng (điện + gas) / kg BGKT</td><td>3.500 đ</td><td>5.000 đ</td><td>Tốn năng lượng bất thường (máy, thiếu gas nhập, sản lượng thấp).</td></tr>
+  <tr><td>Tỷ lệ giá vốn / doanh thu</td><td>90%</td><td>100%</td><td>Biên lãi mỏng / lỗ.</td></tr>
+  <tr><td>Số dòng bán dưới giá vốn</td><td>1</td><td>5</td><td>Xem Bán hàng – cột Tỷ lệ chênh lệch đỏ.</td></tr>
+  <tr><td>Số dòng bán làm tồn thành phẩm âm (theo ngày)</td><td>1</td><td>1</td><td>Bán trước khi có hàng nhập kho → thiếu / trễ lệnh sản xuất.</td></tr>
+  <tr><td>CP 622 + 627 chưa phân bổ</td><td>1 đ</td><td>1 đ</td><td>Chi phí tháng không có lệnh sản xuất nhận → giá thành thiếu chi phí.</td></tr>
+  <tr><td>Số mã hàng âm kho cuối tháng</td><td>1</td><td>1</td><td>Xem mục Tồn cuối kỳ âm.</td></tr>
+  <tr><td>Số dòng xuất NVL làm âm kho tại ngày xuất</td><td>1</td><td>10</td><td>NVL dùng trước ngày mua về – kiểm tra ngày nhập kho / tách dòng mua.</td></tr>
+  <tr><td>Tháng có sản xuất nhưng chưa nhập CP nhân công 622</td><td colspan="2">Chưa nhập</td><td>Nhập 622 ở Chi phí 622/627 rồi tính lại.</td></tr></tbody></table></div>
+  <div class="small" style="margin:10px 0 6px"><b>4. Các dấu hiệu khác</b>:</div>
+  <ul class="tight small">
+  <li><b>Tỷ lệ chênh lệch</b> (Mua hàng / Bán hàng): vàng / đỏ khi đơn giá lệch so với giá so sánh vượt ngưỡng (mặc định mua 10% / 30%, bán 5% / 20%); bán dưới giá vốn luôn đỏ. Tổng hợp ở mục <i>Đơn giá mua / bán bất thường</i>.</li>
+  <li><b>Trạng thái dữ liệu</b> (Bán hàng): <i>ÂM KHO</i> = dòng bán làm tồn thành phẩm âm tại ngày đó · <i>THIẾU SỐ HĐ</i> = chưa nhập số hóa đơn.</li>
+  <li><b>Kiểm tra lệnh sản xuất</b> (Cảnh báo &amp; kiểm tra): <i>Thiếu định mức</i> · <i>Thiếu mã NVL</i> · <i>Thiếu giá vốn NVL</i> (NVL chưa có tồn đầu / chứng từ mua) · <i>Chưa có giá thành …</i> (bán thành phẩm chưa có SL / giá thành trong tháng) – mỗi dòng có gợi ý cách xử lý và nút Đi tới lệnh.</li>
+  <li><b>Dòng tô đỏ</b> trong bảng nhập liệu = thiếu thông tin bắt buộc (cột có dấu *).</li></ul></div>
+  <div class="box"><h3>Phát hiện sai – làm lại thế nào?</h3>
+  <table style="margin-top:4px"><thead><tr><th>Phát hiện</th><th>Cách làm lại</th></tr></thead><tbody>
+  <tr><td>Sai Danh mục / Số dư đầu kỳ / Định mức</td><td>Sửa trực tiếp hoặc Nhập Excel chế độ thay thế. Đổi NVL vĩnh viễn: đặt <i>Hiệu lực đến</i> dòng cũ + thêm dòng mới có <i>Hiệu lực từ</i>; đổi tạm thời: NVL thay thế. Rồi ▶ Tính giá thành.</td></tr>
+  <tr><td>Thiếu / sai Mua, Bán, Xuất dùng chung</td><td>Sửa ở nhóm 2 (Nhập Excel cùng tháng chọn <i>Thay thế các kỳ có trong tệp</i>). Bán hàng thay đổi nhiều → Tính giá thành với tick <i>Đề xuất lại từ đầu</i> (hoặc nút ⟲ Đề xuất lại từ tháng này ở Lệnh sản xuất).</td></tr>
+  <tr><td>Thực tế sản xuất khác đề xuất</td><td>Sửa tay ở Lệnh sản xuất: ô <i>Số lượng</i>, hoặc <i>Điều chỉnh TP (+/- thùng)</i> ở dòng thành phẩm. Không sửa SL bán thành phẩm bằng tay nếu đã có điều chỉnh TP.</td></tr>
+  <tr><td>Tồn NVL âm</td><td>Kiểm tra chứng từ mua; nếu đúng là tiêu hao thấp hơn định mức: Cân đối NVL → ⚙ Cân đối theo đề xuất → tính lại.</td></tr>
+  <tr><td>Sai Chi phí 622/627 hoặc tỷ lệ phân bổ</td><td>Sửa số chi phí ở Chi phí 622/627, tỷ lệ ở Thiết lập &amp; sao lưu → Phân bổ 622/627 → tính lại. Chỉ ảnh hưởng 622/627/154 và giá vốn.</td></tr>
+  <tr><td>Tháng đã khóa</td><td>🔒 Khóa kỳ → mở khóa tháng → sửa → tính lại → khóa lại.</td></tr>
+  <tr><td>Làm lại toàn bộ</td><td>Thiết lập &amp; sao lưu → Sao lưu (.json) trước → Phục hồi từ một file sao lưu cũ (hoặc Nạp dữ liệu năm 2026).</td></tr>
+  </tbody></table></div>
+  <div class="box"><h3>Thiết lập – ở đâu?</h3><ul class="tight small">
+  <li><b>Thông số đề xuất</b> (ước tính điện + gas từng tháng, tỷ lệ đ/kg, tồn tối đa, tồn an toàn, % giảm khi tồn đủ, số ngày tính BQ bán): Đề xuất sản xuất → Thông số đề xuất.</li>
+  <li><b>Quy tắc phân bổ 622/627</b>: Thiết lập &amp; sao lưu → tab Phân bổ 622/627.</li>
+  <li><b>Sản phẩm lỗi</b> (tỷ lệ lỗi, giá bán ước tính, áp dụng từ kỳ): Thiết lập &amp; sao lưu → tab Sản phẩm lỗi.</li>
+  <li><b>Ngưỡng tồn kho</b> (tối đa / tối thiểu theo nhóm hoặc theo mã): Cảnh báo &amp; kiểm tra → tab Ngưỡng cảnh báo.</li>
+  <li><b>Chênh lệch giá mua / bán</b>: cột <b>Tỷ lệ chênh lệch</b> ở Mua hàng &amp; Bán hàng (so với giá mua / giá bán bình quân 3 tháng gần nhất của mã hàng; cột Chênh lệch giá mua / bán = giá dòng này − giá so sánh; tô vàng = nên xem lại, đỏ = lệch nhiều hoặc bán dưới giá vốn). Bấm ▼ ở cột này để sắp xếp từ lớn đến nhỏ hoặc lọc. Tổng hợp ở mục Đơn giá mua / bán bất thường trong Cảnh báo &amp; kiểm tra; ngưỡng % ở tab Ngưỡng cảnh báo.</li>
+  <li><b>Lịch nghỉ / tăng ca</b>: Hệ thống → Thiết lập &amp; sao lưu → tab Lịch nghỉ / tăng ca.</li>
+  <li><b>File tải HĐ chuyển ngày nhập kho</b> (File tải dữ liệu kế toán → tab HĐ chuyển ngày nhập kho): lấy các hóa đơn có ngày HĐ trong kỳ đang xem và có dòng chuyển ngày nhập kho. Phân loại theo cột <b>Mua hàng chưa HĐ</b> ở Mua hàng: dòng ghi <b>x - Số HĐ</b> (chuyển về trước) = <b>Không kèm hóa đơn</b> – sheet Mua hàng trong nước chỉ ghi tiền hàng (số phiếu thêm -001, -002…), tiền thuế khai ở sheet Nghiệp vụ khác (Nợ 1331 / Có 331, số NVK-số phiếu); dòng chỉ ghi <b>Số HĐ</b> = <b>Nhận kèm hóa đơn</b> – khai cả tiền hàng và thuế ở sheet Mua hàng trong nước (số phiếu NK+ngày HĐ yymmdd-số HĐ, TK thuế 1331). Tổng tiền hàng + thuế của 2 sheet bằng tổng giá trị tờ hóa đơn. Thuế suất, Mã NCC, Mẫu số HĐ, Ký hiệu HĐ lấy từ các cột cùng tên ở Mua hàng. Sheet Đối chiếu HĐ phải lệch 0 (lệch tiền hàng, lệch thuế, lệch tổng).</li>
+  <li><b>File kế toán</b> (mã/tên đối tượng, TK Nợ xuất, TK Có nhập; kho theo cột Kho của Danh mục): Thiết lập &amp; sao lưu → ô File tải dữ liệu kế toán.</li></ul></div>
+  <div class="box"><h3>Quy ước màn hình</h3><ul class="tight small"><li>Ô <b>vàng</b>: nhập liệu. Ô <b>xám</b>: phần mềm tự tính – không sửa.</li><li>Nút <b>Nhập Excel</b> ở mỗi bảng: kéo thả tệp đúng mẫu (tải mẫu ngay trong cửa sổ) hoặc dán trực tiếp.</li><li>Báo cáo (Giá thành, NXT, Tổng hợp…) tự cập nhật theo số liệu mới nhất. Nút <b>▶ Tính giá thành</b> sáng lên khi có dữ liệu mới – bấm để chạy đề xuất sản xuất và đề xuất cân đối NVL.</li></ul></div></main>
+</div>
+<div id="modal"></div>
+
+
+
+
+</body></html>

@@ -2,18 +2,27 @@
 
 Bộ **artifact hoàn chỉnh** của Phần mềm Giá thành (bản chạy trên claude.ai), kèm **đầy đủ dữ liệu**: dữ liệu demo năm 2026 và ảnh chụp dữ liệu thật ngày 04/11/2026. Mục đích là dùng làm mẫu (mockup) để dựng hệ thống.
 
-- Phần mềm gồm một tệp HTML duy nhất (HTML + CSS + JavaScript thuần), không cần máy chủ.
+- Phần mềm chạy là một tệp HTML duy nhất (HTML + CSS + JavaScript thuần), không cần máy chủ. Mã nguồn được tách ở `src/` theo từng phần / từng màn hình; `build.py` ghép lại thành tệp chạy.
 - Logic giá thành đối chiếu khớp file Excel gốc `Gia thanh - 26 TH.xlsx`: 10 tháng 2026, 1.172 lệnh, 24 mã, **0 chỉ tiêu lệch**. Kết quả này đo khi tắt quy tắc sản phẩm lỗi; xem mục *Lưu ý* bên dưới.
 
 ## Cấu trúc
 
 ```
+src/                          MÃ NGUỒN chia theo thư mục – sửa ở đây (xem src/README.md: màn hình nào nằm ở tệp nào)
+  index.html                  Khung trang + thứ tự ghép (//@include)
+  css/app.css                 Giao diện
+  data/seed.json              Dữ liệu demo nhúng sẵn
+  js/core/  js/calc/  js/ui/  Phần nền, công thức tính, giao diện dùng chung
+  js/screens/                 Mỗi màn hình một tệp (nhap-lieu/, thiet-lap/)
+build.py                      Ghép src/ → artifact/index.html (python3 build.py; --check để so khớp)
+screens-preview/              Bản xem tĩnh từng màn hình / tab (HTML thuần, mở index.html để duyệt)
 artifact/
-  index.html                  Phần mềm đầy đủ, có nhúng dữ liệu demo 2026 (nút "Nạp dữ liệu năm 2026")
+  index.html                  Bản chạy trên claude.ai – GHÉP TỰ ĐỘNG từ src/, không sửa tay
   index_mau_trong.html        Bản mẫu trống cho công ty khác: không dữ liệu, tên [TÊN CÔNG TY], chưa khai sản phẩm lỗi
   artifact_manifest.json      Khai báo artifact: capabilities db + downloads, bộ sưu tập dữ liệu "gt"
 data/
-  SaoLuu_GiaThanh_2026-11-12.json   MỚI NHẤT – trạng thái đang lưu trên tài khoản ngày 12/11/2026 (52 tài liệu), đúng định dạng file sao lưu
+  SaoLuu_GiaThanh_2026-11-16.json   Sao lưu dữ liệu thật ngày 16/11/2026 (dùng để chụp screens-preview)
+  SaoLuu_GiaThanh_2026-11-12.json   Bản sao lưu ngày 12/11/2026, đúng định dạng file sao lưu
   SaoLuu_GiaThanh_2026-11-04.json   Bản sao lưu cũ ngày 04/11/2026 (giữ để đối chiếu)
   db_gt/*.json                       Cùng dữ liệu bản 12/11/2026, tách theo từng tài liệu của kho "gt" (tên tệp = id tài liệu)
   demo_2026_seed.json                Dữ liệu demo nhúng sẵn trong index.html (chuyển từ Excel gốc)
@@ -59,6 +68,11 @@ tests/                               Kiểm thử tự động Playwright + extr
    - Xuất bản `artifact/index.html`, khai báo capabilities theo `artifact_manifest.json`.
    - Mở artifact, rồi phục hồi từ file `.json` như bước 2. Cách khác: ghi từng tệp `data/db_gt/<id>.json` vào bộ sưu tập `gt` với id = tên tệp.
 4. **Dựng cho công ty khác:** bắt đầu từ `artifact/index_mau_trong.html` và đọc `docs/04_HUONG_DAN_XAY_DUNG_CHO_CONG_TY_MOI.md`.
+
+## Sửa phần mềm
+1. Sửa tệp trong `src/` → `python3 build.py` → mở `artifact/index.html` để thử.
+2. Chụp lại bản xem tĩnh: `cd tests && node chup_ban_xem_tinh.js ../data/SaoLuu_GiaThanh_2026-11-16.json`.
+3. Chi tiết từng tệp: `src/README.md`.
 
 ## Chạy kiểm thử
 ```
