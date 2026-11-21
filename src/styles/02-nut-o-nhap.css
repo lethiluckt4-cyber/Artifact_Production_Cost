@@ -1,0 +1,15 @@
+/*# Nút Tính giá thành/Khóa kỳ, nhãn năm, ô chọn dòng, ô ngày */
+.btn.btn-calc,.kyrow .btn.btn-calc,.toolbar .btn.btn-calc{background:#16a34a;border-color:#15803d;color:#fff;font-weight:600}.kyrow .btn.btn-calc:hover,.toolbar .btn.btn-calc:hover{background:#15803d}
+.btn.btn-lock,.kyrow .btn.btn-lock,.toolbar .btn.btn-lock{background:#facc15;border-color:#eab308;color:#422006;font-weight:600}.kyrow .btn.btn-lock:hover,.toolbar .btn.btn-lock:hover{background:#eab308}
+.lbl-y{color:var(--pri);font-weight:600}
+.kyrow .lbl-y{margin-right:2px}
+th.ckth,td.ck{width:34px;min-width:34px!important;max-width:34px;text-align:center;padding-left:4px!important;padding-right:4px!important} td.ck input,th.ckth input{width:15px;height:15px;cursor:pointer;margin:0;vertical-align:middle}
+tr.selrow td{background:#eff6ff!important}
+th.rq::after{content:' *';color:#fca5a5;font-weight:700}
+tr.tot.sub td{background:#f1f5ff;font-weight:600;color:#1e3a8a}
+.btn.d,.toolbar .btn.d,.kyrow .btn.d{background:#fff;border-color:#fca5a5;color:#b91c1c}.btn.d:hover{background:#fee2e2}
+.dI{position:relative;display:inline-flex;align-items:center;vertical-align:middle}.dI.full{display:flex;width:100%}.dI .dtxt{padding-right:30px!important}.dI .dtxt.d{width:132px}.dI .dtxt.m{width:112px}.dI.full .dtxt{width:100%!important}
+.dI .dcal{position:absolute;right:4px;top:50%;transform:translateY(-50%);border:0;background:none;padding:3px;cursor:pointer;color:#64748b;display:flex}.dI .dcal:hover{color:var(--pri)}.dI .dcal:disabled{cursor:default;opacity:.4}.dI .dcal svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+.dI input.dnat{position:absolute;left:0;bottom:0;width:1px!important;height:1px!important;opacity:0;pointer-events:none;border:0;padding:0;margin:0}
+#ckT .af-bad{border-color:#dc2626;background:#fef2f2}
+.dI .dtxt.af-bad{border-color:#dc2626;background:#fef2f2}

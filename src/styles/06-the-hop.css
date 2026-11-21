@@ -1,0 +1,13 @@
+/*# Pill, thẻ số liệu, hộp nội dung */
+.pill{font-size:12px;padding:2px 8px;border-radius:20px;background:#eef2f7;color:var(--mut)}
+.pill.ok{background:#dcfce7;color:var(--ok)}.pill.warn{background:#fef3c7;color:var(--warn)}.pill.bad{background:#fee2e2;color:var(--bad)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.card .l{font-size:var(--fs-s);color:var(--mut);margin-bottom:4px}
+.card .v{font-family:var(--font-h);font-size:21px;font-weight:600}
+.card .s{font-size:var(--fs-s);color:var(--mut);margin-top:2px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.box h3{margin:0 0 10px;font-size:15px;font-weight:600;color:#1d4ed8}
+.modal .in h3{font-family:var(--font-h);font-weight:600;font-size:15px;margin:0 0 10px;color:#1d4ed8}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.bar .sp{flex:1}

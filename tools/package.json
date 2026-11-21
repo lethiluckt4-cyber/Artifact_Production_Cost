@@ -4,7 +4,8 @@
   "description": "C\u00f4ng c\u1ee5 v\u00e0 ki\u1ec3m th\u1eed Ph\u1ea7n m\u1ec1m Gi\u00e1 th\u00e0nh \u2013 KH Th\u1ea3o Vy",
   "main": "test.js",
   "scripts": {
-    "test": "node ../tests/test37.js"
+    "build": "node build.js",
+    "test": "node ../tests/kiem_tra_man_hinh.js"
   },
   "keywords": [],
   "author": "",

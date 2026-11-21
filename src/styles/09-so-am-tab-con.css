@@ -1,0 +1,5 @@
+/*# Số âm màu đỏ, tab con */
+.neg{color:#dc2626 !important}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 8px;padding:6px;border:2px solid transparent}
+.subtabs button{border:1px solid #cbd5e1;background:#fff;border-radius:6px;padding:3px 10px;font:inherit;font-size:13px;cursor:pointer;color:#334155}
+.subtabs button.act{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
